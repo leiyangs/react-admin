@@ -10,6 +10,9 @@ module.exports = appInfo => {
   config.middleware = [];
 
   const userConfig = {
+    security: {
+      csrf: false,
+    },
     mysql: {
       client: {
         host: 'localhost',
