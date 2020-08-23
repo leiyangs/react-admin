@@ -3,30 +3,42 @@
 const Controller = require('egg').Controller;
 
 class BaseController extends Controller {
+  success(data) {
+    this.ctx.body = {
+      code: 0,
+      data,
+    };
+  }
+  error(data) {
+    this.ctx.body = {
+      code: 1,
+      data,
+    };
+  }
   async index() {
-    const { ctx, service } = this;
+    const { service } = this;
     const result = await service[this.entity].select();
-    ctx.body = { code: 0, data: result, message: 'success' };
+    this.success(result);
   }
   async create() {
     const { ctx, service } = this;
     const user = ctx.request.body;
-    await service[this.entity].create(user);
-    ctx.body = { code: 0, data: '', message: 'success' };
+    const result = await service[this.entity].create(user);
+    result > 0 ? this.success('添加成功') : this.error('添加失败');
   }
   async update() {
     const { ctx, service } = this;
     const id = ctx.params.id;
     const user = ctx.request.body;
     user.id = id;
-    await service[this.entity].update(user);
-    ctx.body = { code: 0, data: '', message: 'success' };
+    const result = await service[this.entity].update(user);
+    result > 0 ? this.success('更新成功') : this.error('更新失败');
   }
   async destroy() {
     const { ctx, service } = this;
     const id = ctx.params.id;
-    await service[this.entity].destroy(id);
-    ctx.body = { code: 0, data: '', message: 'success' };
+    const result = await service[this.entity].destroy(id);
+    result > 0 ? this.success('删除成功') : this.error('删除失败');
   }
 }
 
