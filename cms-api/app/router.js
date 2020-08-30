@@ -9,4 +9,10 @@ module.exports = app => {
   router.resources('role', '/api/role', controller.role);
   router.resources('roleResource', '/api/roleResource', controller.roleResource);
   router.resources('roleUser', '/api/roleUser', controller.roleUser);
+  // 获取所有用户
+  router.get('/api/role/getUser', controller.role.getUser);
+  // 设置用户
+  // router.get('/api/role/setUser', controller.role.setUser);
+  // router.get('/api/role/getResource', controller.role.getResource);
+  // router.post('/api/role/setResource', controller.role.setResource);
 };

@@ -7,6 +7,9 @@ class RoleService extends BaseService {
     super(...args);
     this.entity = 'role';
   }
+  async getUser() {
+    return await this.app.mysql.select(this.entity);
+  }
 }
 
 module.exports = RoleService;
