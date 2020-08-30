@@ -19,6 +19,18 @@ class RoleController extends BaseController {
     const result = await service[this.entity].setUser(body);
     result ? this.success('为角色设置用户成功') : this.success('为角色设置用户失败');
   }
+  async getResource() {
+    const { service } = this;
+    const result = await service.role.getResource();
+    this.success(result);
+  }
+  // 设置资源和用户的关系
+  async setResource() {
+    const { ctx, service } = this;
+    const body = ctx.request.body;
+    const result = await service.role.setResource(body);
+    result ? this.success('为角色设置资源成功') : this.success('为角色设置资源失败');
+  }
 }
 
 module.exports = RoleController;

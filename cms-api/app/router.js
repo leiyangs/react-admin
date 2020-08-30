@@ -13,6 +13,6 @@ module.exports = app => {
   router.get('/api/role/getUser', controller.role.getUser);
   // 设置用户与角色关系
   router.post('/api/role/setUser', controller.role.setUser);
-  // router.get('/api/role/getResource', controller.role.getResource);
-  // router.post('/api/role/setResource', controller.role.setResource);
+  router.get('/api/role/getResource', controller.role.getResource);
+  router.post('/api/role/setResource', controller.role.setResource);
 };
