@@ -7,6 +7,7 @@ class RoleController extends BaseController {
     super(...args);
     this.entity = 'role';
   }
+  // 获取用户角色
   async getUser() {
     const { service } = this;
     const result = await service[this.entity].getUser();
@@ -19,6 +20,7 @@ class RoleController extends BaseController {
     const result = await service[this.entity].setUser(body);
     result ? this.success('为角色设置用户成功') : this.success('为角色设置用户失败');
   }
+  // 获取角色资源
   async getResource() {
     const { service } = this;
     const result = await service.role.getResource();
