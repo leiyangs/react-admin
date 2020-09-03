@@ -15,8 +15,10 @@ class BaseController extends Controller {
       data,
     };
   }
+  // 支持分页
   async index() {
     const { service } = this;
+    const [ pageNum, pageSize ] = ctx.request.body;
     const result = await service[this.entity].select();
     this.success(result);
   }
