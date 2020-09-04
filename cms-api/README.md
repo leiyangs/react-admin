@@ -58,3 +58,4 @@ cnpm i egg-mysql -S
 ### 配置config
 
 node 图形验证码 `npm i svg-captcha -S`
+`npm i roadhog -g`

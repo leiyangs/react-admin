@@ -11,7 +11,7 @@ class BaseService extends Service {
     return affectedRows;
   }
   async select(pageNum, pageSize, where) {
-    // return await this.app.mysql.query('SELECT * FROM user WHERE username="张三" ORDER BY id desc, age asc limit 3,3;');
+    // const list =  await this.app.mysql.query('SELECT * FROM user ORDER BY id asc limit 2,3');
     const list = await this.app.mysql.select(this.entity, {
       where,
       orders: [ [ 'id', 'asc' ] ],
