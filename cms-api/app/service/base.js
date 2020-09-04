@@ -10,9 +10,16 @@ class BaseService extends Service {
     const affectedRows = result.affectedRows;
     return affectedRows;
   }
-  async select() {
-    // return await this.app.mysql.query('select * from user');
-    return await this.app.mysql.select(this.entity);
+  async select(pageNum, pageSize, where) {
+    // return await this.app.mysql.query('SELECT * FROM user WHERE username="张三" ORDER BY id desc, age asc limit 3,3;');
+    const list = await this.app.mysql.select(this.entity, {
+      where,
+      orders: [ [ 'id', 'asc' ] ],
+      offset: (pageNum - 1) * pageSize, // 偏移量，计算前面有几条
+      limit: pageSize
+    });
+    const total = await this.app.mysql.count(this.entity, where); // 查询条件下的总条数
+    return { list, total };
   }
   async update(entity) {
     const result = await this.app.mysql.update(this.entity, entity);

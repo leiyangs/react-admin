@@ -1,17 +1,21 @@
 # cms-api
 
 ```npm
+
 $ npm i egg-init -g
 $ egg-init cms-api --type=simple
 $ cd cms-api
 $ npm i
 $ npm run dev
+
 ```
 
 ## 使用mysql
 
 数据库脚本
+
 ```mysql
+
 CREATE TABLE user (
  id int(11) PRIMARY KEY AUTO_INCREMENT,
  username varchar(255) NULL,
@@ -31,7 +35,7 @@ CREATE TABLE role (
 CREATE TABLE role_user (
 role_id int(11) NOT NULL,
 user_id int(11) NOT NULL,
-PRIMARY KEY (user_id, role_id) 
+PRIMARY KEY (user_id, role_id)
 );
 
 CREATE TABLE resource (
@@ -42,8 +46,9 @@ name varchar(255) NOT NULL
 CREATE TABLE role_resource (
 role_id int(11) NOT NULL,
 resource_id int(255) NOT NULL,
-PRIMARY KEY (role_id, resource_id) 
+PRIMARY KEY (role_id, resource_id)
 );
+
 ```
 
 ```npm
@@ -51,3 +56,5 @@ cnpm i egg-mysql -S
 ```
 
 ### 配置config
+
+node 图形验证码 `npm i svg-captcha -S`

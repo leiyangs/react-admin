@@ -17,9 +17,11 @@ class BaseController extends Controller {
   }
   // 支持分页
   async index() {
-    const { service } = this;
-    const [ pageNum, pageSize ] = ctx.request.body;
-    const result = await service[this.entity].select();
+    const { service, ctx } = this;
+    const { pageNum, pageSize, ...where } = ctx.query;
+    const currentPageNum = isNaN(pageNum) ? 1 : parseInt(pageNum);
+    const currentPageSize = isNaN(pageSize) ? 5 : parseInt(pageSize);
+    const result = await service[this.entity].select(currentPageNum, currentPageSize, where);
     this.success(result);
   }
   async create() {
