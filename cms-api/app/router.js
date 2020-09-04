@@ -17,4 +17,8 @@ module.exports = app => {
   router.get('/api/role/getResource', controller.role.getResource);
   // 设置角色与资源的关系
   router.post('/api/role/setResource', controller.role.setResource);
+  // 验证码
+  router.get('/api/captcha', controller.index.captcha);
+  // 校验验证码
+  router.post('/api/checkCaptcha', controller.index.checkCaptcha);
 };
