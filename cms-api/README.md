@@ -60,4 +60,4 @@ cnpm i egg-mysql -S
 node 图形验证码 `npm i svg-captcha -S`
 `npm i roadhog -g` roadhog 是基于 webpack 的封装工具，目的是简化 webpack 的配置, 基于create-react-app
 [YAML](http://nodeca.github.io/js-yaml/) 是专门用来写配置文件的语言，非常简洁和强大，远比 JSON 格式方便
-[UmiJS](https://umijs.org/zh/guide/) 是一个类 Next.JS 的 react 开发框架。`cnpm install -g umi`
+[UmiJS](https://umijs.org/zh/guide/) 是一个类 Next.JS 的 react 开发框架。`cnpm install -g umi`安装全局 `umi dev`启动项目
