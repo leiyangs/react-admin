@@ -1,7 +1,14 @@
 import React from 'react';
+import { router } from 'umi';
 
 export default class Profile extends React.Component {
   render() {
-    return <div>个人中心</div>
+    console.log(router)
+    return (
+      <div>
+        <button onClick={() => router.push('/')}>回首页</button>
+        <div>个人中心</div>
+      </div>
+    )
   }
 }
