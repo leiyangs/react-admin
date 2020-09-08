@@ -5,11 +5,6 @@ import { plugin } from './plugin';
 export function getRoutes() {
   const routes = [
   {
-    "path": "/f",
-    "exact": true,
-    "component": require('@/pages/f.js').default
-  },
-  {
     "path": "/",
     "exact": true,
     "component": require('@/pages/index.js').default
