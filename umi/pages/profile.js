@@ -1,12 +1,11 @@
 import React from 'react';
-import { router } from 'umi/router';
+import { history } from "umi"; // 之前的router变成了history。。。
 
 export default class Profile extends React.Component {
   render() {
-    console.log(router)
     return (
       <div>
-        <button onClick={() => router.push('/')}>回首页</button>
+        <button onClick={() => history.push('/')}>回首页</button>
         <div>个人中心</div>
       </div>
     )
