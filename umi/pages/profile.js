@@ -1,5 +1,5 @@
 import React from 'react';
-import { router } from 'umi';
+import { router } from 'umi/router';
 
 export default class Profile extends React.Component {
   render() {
