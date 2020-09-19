@@ -20,7 +20,7 @@ export default class Layout extends React.Component {
         </nav>
         <div className="container">
           <div className="row">
-            <div className="col-md-8 col-md-offset-2">
+            <div className="col-md-8 col-offset-2">
             { this.props.children }
             </div>
           </div>
