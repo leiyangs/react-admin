@@ -1,5 +1,6 @@
 import React from 'react';
 import { history } from 'umi';
+
 export default class UserAdd extends React.Component {
   constructor() {
     super();
