@@ -1,3 +1,4 @@
+// 文件夹名字是定死的
 import React from 'react';
 import { Link } from 'umi';
 import 'bootstrap/dist/css/bootstrap.css';
