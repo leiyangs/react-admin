@@ -11,23 +11,27 @@ export function getRoutes() {
       {
         "path": "/404",
         "exact": true,
-        "component": require('@/pages/404.js').default
+        "component": require('@/pages/404.js').default,
+        "title": "404"
       },
       {
         "path": "/",
         "exact": true,
-        "component": require('@/pages/index.js').default
+        "component": require('@/pages/index.js').default,
+        "title": "ERP"
       },
       {
         "path": "/login",
         "exact": true,
-        "component": require('@/pages/login.js').default
+        "component": require('@/pages/login.js').default,
+        "title": "登录"
       },
       {
         "path": "/profile",
         "exact": true,
         "component": require('@/pages/profile.js').default,
-        "wrappers": [require('@/wrappers/profile').default]
+        "wrappers": [require('@/wrappers/profile').default],
+        "title": "个人中心"
       },
       {
         "path": "/user",

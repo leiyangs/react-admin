@@ -1,7 +1,7 @@
 import React from 'react';
 import { history } from 'umi';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   render() {
     return (
       <>
@@ -20,3 +20,7 @@ export default class Login extends React.Component {
     )
   }
 }
+
+Login.title = '登录';
+
+export default Login;

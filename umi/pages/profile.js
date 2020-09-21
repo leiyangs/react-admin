@@ -15,5 +15,6 @@ class Profile extends React.Component {
 }
 
 Profile.wrappers = ['@/wrappers/profile'];
+Profile.title = '个人中心';
 
 export default Profile;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Page404 extends React.Component {
+class Page404 extends React.Component {
   render() {
     return (
       <>
@@ -9,3 +9,7 @@ export default class Page404 extends React.Component {
     )
   }
 }
+
+Page404.title = "404";
+
+export default Page404;

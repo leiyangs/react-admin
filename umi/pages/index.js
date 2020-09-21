@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { Link } from 'umi';
 
-export default class Home extends Component {
+class Home extends Component {
   render() {
     return (
      <div>
@@ -12,3 +12,7 @@ export default class Home extends Component {
     )
   }
 }
+
+Home.title = 'ERP';
+
+export default Home;
