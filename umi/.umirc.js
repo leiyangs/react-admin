@@ -1,5 +1,5 @@
 export default {
   history: {
-    type: 'hash'
+    type: 'history'
   }
 }

@@ -6,7 +6,7 @@ export default class UserDetail extends React.Component {
   state = {user: {}}
   componentDidMount() {
     let user = this.props.location.state;
-    if(!user) {
+    if(!user) { // 如果是hash模式刷新拿不到state
       let userStr = localStorage.getItem('users');
       let users = userStr ? JSON.parse(userStr) : [];
       user = users.find(user => user.id == this.props.match.params.id ? user : {id: '', username: ''});

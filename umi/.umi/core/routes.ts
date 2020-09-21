@@ -9,14 +9,25 @@ export function getRoutes() {
     "component": require('@/layouts/index.js').default,
     "routes": [
       {
+        "path": "/404",
+        "exact": true,
+        "component": require('@/pages/404.js').default
+      },
+      {
         "path": "/",
         "exact": true,
         "component": require('@/pages/index.js').default
       },
       {
+        "path": "/login",
+        "exact": true,
+        "component": require('@/pages/login.js').default
+      },
+      {
         "path": "/profile",
         "exact": true,
-        "component": require('@/pages/profile.js').default
+        "component": require('@/pages/profile.js').default,
+        "wrappers": [require('@/wrappers/profile').default]
       },
       {
         "path": "/user",

@@ -1,7 +1,9 @@
+// 通过指定高阶组件 wrappers 达成效果。
+
 import React from 'react';
 import { history } from "umi"; // 之前的router变成了history。。。
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   render() {
     return (
       <div>
@@ -11,3 +13,7 @@ export default class Profile extends React.Component {
     )
   }
 }
+
+Profile.wrappers = ['@/wrappers/profile'];
+
+export default Profile;
