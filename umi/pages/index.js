@@ -1,3 +1,4 @@
+// home组件
 import React, { Component } from 'react'
 import { Link } from 'umi';
 

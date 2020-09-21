@@ -19,15 +19,15 @@ export default class UserAdd extends React.Component {
     return (
       <>
         <form className="form" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <div className="col-md-10 col-offset-2">
+          <div className="col-md-10 col-offset-2">
+            <div className="form-group">
               <label htmlFor="username">用户名</label>
               <input className="form-control" ref={this.usernameRef}/>
             </div>
           </div>
-          <div className="form-group">
-            <div className="col-md-10 col-offset-2">
-              <input type="submit" className="btn btn-primary" value="保存"/>
+          <div className="col-md-10 col-offset-2">
+            <div className="form-group">
+              <input type="submit" className="btn btn-primary" value="保 存"/>
             </div>
           </div>
         </form>

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { ApplyPluginsType } from 'C:/Users/Yanglei/AppData/Roaming/npm/node_modules/umi/node_modules/_@umijs_runtime@3.2.20@@umijs/runtime';
+import { ApplyPluginsType } from 'C:/Users/user/AppData/Roaming/npm/node_modules/umi/node_modules/_@umijs_runtime@3.2.20@@umijs/runtime';
 import { plugin } from './plugin';
 
 export function getRoutes() {
@@ -25,6 +25,11 @@ export function getRoutes() {
             "path": "/user/add",
             "exact": true,
             "component": require('@/pages/user/add.js').default
+          },
+          {
+            "path": "/user/detail/:id",
+            "exact": true,
+            "component": require('@/pages/user/detail/[id].js').default
           },
           {
             "path": "/user/list",

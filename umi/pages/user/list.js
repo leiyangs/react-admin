@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Link } from 'umi';
 
 export default class UserList extends Component {
   state = { users: [] }
@@ -11,8 +12,10 @@ export default class UserList extends Component {
     return (
       <ul className="list-group">
         {
-          this.state.users.map(user => 
-            <li className="list-group-item" key={user.id}>{user.username}</li>
+          this.state.users.map(user =>
+            <li className="list-group-item" key={user.id}>
+              <Link to={{ pathname: `/user/detail/${user.id}`, state: user }}>{user.username}</Link>
+            </li>
           )
         }
       </ul>
