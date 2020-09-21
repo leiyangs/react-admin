@@ -3,8 +3,17 @@
 import React from 'react';
 
 export default class UserDetail extends React.Component {
+  state = {user: {}}
+  componentDidMount() {
+    let user = this.props.location.state;
+    if(!user) {
+      let userStr = localStorage.getItem('users');
+      let users = userStr ? JSON.parse(userStr) : [];
+      user = users.find(user => user.id == this.props.match.params.id ? user : {id: '', username: ''});
+    }
+    this.setState({user});
+  }
   render() {
-    const user = this.props.location.state;
     return (
       <table className="table table-bordered">
         <thead>
@@ -15,8 +24,8 @@ export default class UserDetail extends React.Component {
         </thead>
         <tbody>
           <tr>
-            <td>{user.id}</td>
-            <td>{user.username}</td>
+            <td>{this.state.user.id}</td>
+            <td>{this.state.user.username}</td>
           </tr>
         </tbody>
       </table>
