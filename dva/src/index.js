@@ -1,5 +1,6 @@
 import React from 'react';
 import dva, { connect } from 'dva';
+import keymaster from 'keymaster';
 
 const delay = ms => new Promise(resolve => setTimeout(() => {
   resolve();
@@ -24,6 +25,20 @@ app.model({
     *asyncAdd(action, { put }) {
       yield delay(1000);
       yield put({type:'add'});
+    }
+  },
+  subscriptions: {
+    // 可以在subscribe中定义多个属性和值，值是一个函数，函数会在初始化的时候执行一次
+    keyboard({dispatch}) {
+      keymaster('space', () => {
+        dispatch({type: 'add'});
+      })
+      
+    },
+    key({dispatch}) {
+      keymaster('enter', () => {
+        dispatch({type: 'effects/asyncadd'})
+      })
     }
   }
 })
