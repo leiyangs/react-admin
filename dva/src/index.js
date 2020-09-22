@@ -1,6 +1,10 @@
 import React from 'react';
 import dva, { connect } from 'dva';
 
+const delay = ms => new Promise(resolve => setTimeout(() => {
+  resolve();
+}, ms))
+
 // 执行dva函数可以得到一个app对象，代表dva的应用对象
 const app = dva();
 
@@ -14,6 +18,13 @@ app.model({
     add(state) {
       return { number:state.number + 1 }
     }
+  },
+  effects: { // 副作用
+    // 在effects中每个属性都是一个generator
+    *asyncAdd(action, { put }) {
+      yield delay(1000);
+      yield put({type:'add'});
+    }
   }
 })
 
@@ -21,6 +32,7 @@ const Counter = props => (
   <>
     <p>{props.number}</p>
     <button onClick={()=>props.dispatch({type:'counter/add'})}>+</button>
+    <button onClick={()=>props.dispatch({type:'counter/asyncAdd'})}>掉接口+</button>
   </>
 )
 
