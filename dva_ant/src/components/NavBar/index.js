@@ -6,14 +6,14 @@ import styles from './index.css';
 const logo = require('../../assets/yay.jpg');
 
 const { Header } = Layout;
-const { ItemGroup, Item, SubMenu } = Menu;
+const { Item } = Menu;
 
-const NavBar = (props) => {
-  state = { current: home }
+const NavBar = () => {
+  const state = { current: 'home' }
   return (
     <Header className={styles.header}>
       <img src={logo} />
-      <Menu selectedKeys={[current]} mode="horizontal">
+      <Menu selectedKeys={[state.current]} mode="horizontal">
         <Item key="home" icon={<HomeOutlined />}>
           <Link to="/home">首页</Link>
         </Item>

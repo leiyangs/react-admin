@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Layout } from 'antd';
 import NavBar from '../components/NavBar';
-const { Header, Footer, Sider, Content } = Layout;
+const { Footer, Content } = Layout;
 
 function IndexPage() {
   return (
