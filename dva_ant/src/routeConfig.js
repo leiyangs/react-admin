@@ -10,7 +10,7 @@ export default [
   { 
     path: '/',
     component: IndexPage,
-    routes: [
+    routes: [ 
       {
         path: '/home',
         component: Home
