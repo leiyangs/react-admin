@@ -1,4 +1,4 @@
-import React from 'import';
+import React from 'react';
 import { connect } from 'dva';
 
 function Home() {

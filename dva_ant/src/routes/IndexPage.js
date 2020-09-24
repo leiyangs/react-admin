@@ -4,10 +4,10 @@ import { Layout } from 'antd';
 import NavBar from '../components/NavBar';
 const { Footer, Content } = Layout;
 
-function IndexPage() {
+function IndexPage(props) {
   return (
     <Layout>
-       <NavBar/>
+      <NavBar {...props} />
       <Content></Content>
       <Footer></Footer>
     </Layout>
