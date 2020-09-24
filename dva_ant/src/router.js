@@ -8,9 +8,9 @@ function RouterConfig({ history }) {
   return (
     <Router history={history}>
       <Switch>
-        <Route path="/" component={IndexPage} />
-        {/* 从路由表中循环渲染 */}
-        {/* {renderRoutes(routesConfig)}  */}
+        {/* <Route path="/" component={IndexPage} /> */}
+        {/* 从路由表中循环渲染路由 */}
+        {renderRoutes(routesConfig)}
       </Switch>
     </Router>
   );

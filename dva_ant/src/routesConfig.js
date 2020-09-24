@@ -7,10 +7,10 @@ import Register from './routes/Register';
 
 // 配置式路由 集中式路由
 export default [
-  { 
+  {
     path: '/',
     component: IndexPage,
-    routes: [ 
+    routes: [
       {
         path: '/home',
         component: Home

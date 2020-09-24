@@ -12,8 +12,6 @@ const { Item } = Menu;
 
 const NavBar = (props) => {
   const state = { current: 'home' }
-  console.log(props)
-
   return (
     <Header className={styles.header}>
       <img src={logo} />

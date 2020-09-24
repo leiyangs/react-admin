@@ -31,6 +31,8 @@ cnpm i babel-plugin-import -D
 
 ```
 
+缩小打包大小
+
 ```js
 
 {

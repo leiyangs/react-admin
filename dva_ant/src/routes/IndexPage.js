@@ -2,14 +2,18 @@ import React from 'react';
 import { connect } from 'dva';
 import { Layout } from 'antd';
 import NavBar from '../components/NavBar';
-const { Footer, Content } = Layout;
+import { renderRoutes } from '../utils/routes';
+
+const { Content } = Layout;
 
 function IndexPage(props) {
+  console.log(props)
   return (
     <Layout>
       <NavBar {...props} />
-      <Content></Content>
-      <Footer></Footer>
+      <Content>
+        {renderRoutes(props.routes)}
+      </Content>
     </Layout>
   );
 }
