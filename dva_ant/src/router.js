@@ -4,13 +4,13 @@ import IndexPage from './routes/IndexPage';
 import routesConfig from './routesConfig';
 import { renderRoutes } from './utils/routes';
 
-function RouterConfig({ history }) {
+function RouterConfig({ history, app }) {
   return (
     <Router history={history}>
       <Switch>
         {/* <Route path="/" component={IndexPage} /> */}
         {/* 从路由表中循环渲染路由 */}
-        {renderRoutes(routesConfig)}
+        {renderRoutes(routesConfig, app)}
       </Switch>
     </Router>
   );

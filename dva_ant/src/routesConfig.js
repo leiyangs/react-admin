@@ -1,36 +1,37 @@
-import IndexPage from './routes/IndexPage';
+/* import IndexPage from './routes/IndexPage';
 import Home from './routes/Home';
 import User from './routes/User';
 import Profile from './routes/Profile';
 import Login from './routes/Login';
-import Register from './routes/Register';
+import Register from './routes/Register'; */
 
 // 配置式路由 集中式路由
 export default [
   {
     path: '/',
-    component: IndexPage,
+    component: () => import('./routes/IndexPage'),
     redirect: true,
     routes: [
       {
         path: '/home',
-        component: Home
+        component: () => import('./routes/Home'),
+        models: () => [import('./models/home.js')]
       },
       {
         path: '/user',
-        component: User
+        component: () => import('./routes/User')
       },
       {
         path: '/profile',
-        component: Profile
+        component: () => import('./routes/Profile')
       },
       {
         path: '/login',
-        component: Login
+        component: () => import('./routes/Login')
       },
       {
         path: '/register',
-        component: Register
+        component: () => import('./routes/Register')
       },
     ]
   }
