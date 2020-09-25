@@ -10,12 +10,12 @@ export default [
   {
     path: '/',
     component: () => import('./routes/IndexPage'),
-    redirect: true,
     routes: [
       {
         path: '/home',
         component: () => import('./routes/Home'),
-        models: () => [import('./models/home.js')]
+        models: () => [import('./models/home.js')],
+        redirect: true,
       },
       {
         path: '/user',
