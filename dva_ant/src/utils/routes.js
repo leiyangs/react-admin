@@ -2,7 +2,7 @@ import { Redirect, Route } from 'dva/router';
 import dynamic from 'dva/dynamic';
 
 export function renderRoutes(routesConfig, app) {
-  return routesConfig.map(({path, component: getComponents, routes, models=[]}, index) => {
+  return routesConfig.map(({path, component: getComponent, routes, models=[]}, index) => {
     return (
       // <Route key={index} path={path} render={props=><Components {...props} routes={routes} />} />
       // 路由懒加载处理
@@ -10,7 +10,8 @@ export function renderRoutes(routesConfig, app) {
         app,
         models: () => models,
         component: () => {
-          return getComponents().then(result => {
+          debugger
+          return getComponent().then(result => {
             const Component = result.default || result; // result.default 是es导出
             return props=><Component {...props} routes={routes} />
           })
