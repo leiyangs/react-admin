@@ -10,7 +10,13 @@ function mydynamic({app, models, component}) {
         Promise.all(models()),
         component()
       ]).then(([models, Component]) => {
-        models.map(model => app.model(model));
+        // models.map(model => app.model(model));
+        models.map(model => {
+          let finded = app._models.find(item => item.namespace === model.default.name);
+          if(!finded) {
+            app.model(model.default || model);
+          }
+        })
         this.setState({Component});
       })
     }
