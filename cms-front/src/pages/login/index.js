@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Input, Form } from 'antd';
-import 'antd/dist/antd.css';
+import { UserOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
@@ -23,17 +23,32 @@ class Login extends Component {
 
 class LoginForm extends Component {
   render() {
+    const {form: {getFieldDecorator}} = this.props;
+    const formItemLayout = {
+      labelCol: { span:4 },
+      wrapperCol: { span: 20 }
+    }
     return (
       <div>
         <FormWrapper>
           <Form>
-            <Input placeholder="aaa"/>
+            <h3>登录</h3>
+            <Form.Item label="用户名" {...formItemLayout}>
+              {
+                getFieldDecorator('username', {
+                  rules: [{require: true,message:'请输入用户名'}]
+                })(<Input placeholder="用户名" allowClear />)
+              }
+            </Form.Item>
+            
           </Form>
         </FormWrapper>
       </div>
     )
   }
 }
+
+LoginForm = Form.create()(LoginForm);
 
 const FormWrapper = styled.div`
   display: flex;
@@ -46,6 +61,7 @@ const FormWrapper = styled.div`
     text-align: center;
   }
   form {
+    width: 520px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5%;
