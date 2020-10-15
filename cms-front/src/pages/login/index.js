@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Layout, Input, Form } from 'antd';
+import { Layout, Input, Form, Radio, Cascader } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
+import options from '../../utils/addressess';
 
 const { Content } = Layout;
 
@@ -22,8 +23,18 @@ class Login extends Component {
 }
 
 class LoginForm extends Component {
+  state = {
+    gender: 1
+  }
+  handleChangeGender = (e) => {
+    this.setState({
+      gender: e.target.value
+    })
+  }
   render() {
+    // 解构antd提供的方法，可以很方便的校验表单
     const {form: {getFieldDecorator}} = this.props;
+    // 表单label栅格化
     const formItemLayout = {
       labelCol: { span:4 },
       wrapperCol: { span: 20 }
@@ -36,11 +47,50 @@ class LoginForm extends Component {
             <Form.Item label="用户名" {...formItemLayout}>
               {
                 getFieldDecorator('username', {
-                  rules: [{require: true,message:'请输入用户名'}]
-                })(<Input placeholder="用户名" allowClear />)
+                  rules: [{required: true, message:'请输入用户名'}]
+                })(<Input placeholder="用户名" />)
               }
             </Form.Item>
-            
+            <Form.Item label="密码" {...formItemLayout}>
+              {
+                getFieldDecorator('password', {
+                  rules: [{required: true, message:'请输入密码'}]
+                })(<Input.Password placeholder="密码" />)
+              }
+            </Form.Item>
+            <Form.Item label="确认密码" {...formItemLayout}>
+              {
+                getFieldDecorator('repassword', {
+                  rules: [{required: true, message: '请确认密码'}]
+                })(<Input.Password placeholder="确认密码"/>)
+              }
+            </Form.Item>
+            <Form.Item label="邮箱" {...formItemLayout}>
+              {
+                getFieldDecorator('email', {
+                  rules: [{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }]
+                })(<Input />)
+              }
+            </Form.Item>
+            <Form.Item label="性别" {...formItemLayout}>
+              {
+                getFieldDecorator('gender', {
+                  // 初始值设定 initialValue
+                  initialValue: this.state.gender,
+                  rules: [{ required: true, message: '请选择性别' }]
+                })(<Radio.Group onChange={this.handleChangeGender}>
+                  <Radio value={0}>男</Radio>
+                  <Radio value={1}>女</Radio>
+                </Radio.Group>)
+              }
+            </Form.Item>
+            <Form.Item label="住址" {...formItemLayout}>
+              {
+                getFieldDecorator('address', {
+                  rules: [{ required: true, message: '请选择住址' }]
+                })(<Cascader options={options} placeholder="住址" />)
+              }
+            </Form.Item>
           </Form>
         </FormWrapper>
       </div>
@@ -64,7 +114,7 @@ const FormWrapper = styled.div`
     width: 520px;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5%;
+    border-radius: 10px;
     background: rgb(255, 255, 255);
     padding: 35px;
   }
