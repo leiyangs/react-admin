@@ -1,11 +1,11 @@
 export default [
   {
     value: 'zhejiang',
-    label: 'Zhejiang',
+    label: '浙江',
     children: [
       {
         value: 'hangzhou',
-        label: 'Hangzhou',
+        label: '杭州',
         children: [
           {
             value: 'xihu',
@@ -17,15 +17,15 @@ export default [
   },
   {
     value: 'jiangsu',
-    label: 'Jiangsu',
+    label: '江苏',
     children: [
       {
         value: 'nanjing',
-        label: 'Nanjing',
+        label: '南京',
         children: [
           {
             value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
+            label: '中华门',
           },
         ],
       },

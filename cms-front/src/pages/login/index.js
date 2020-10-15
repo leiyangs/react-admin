@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Input, Form, Radio, Cascader } from 'antd';
+import { Layout, Input, Form, Radio, Cascader, Select } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
@@ -24,7 +24,7 @@ class Login extends Component {
 
 class LoginForm extends Component {
   state = {
-    gender: 1
+    gender: 0
   }
   handleChangeGender = (e) => {
     this.setState({
@@ -39,6 +39,14 @@ class LoginForm extends Component {
       labelCol: { span:4 },
       wrapperCol: { span: 20 }
     }
+    const { Option } = Select;
+    const selectBefore = (
+      <Select className="select-before" defaultValue="010" style={{width:'80px'}}>
+        <Option value='010'>010</Option>
+        <Option value='020'>020</Option>
+        <Option value='030'>030</Option>
+      </Select>
+    )
     return (
       <div>
         <FormWrapper>
@@ -48,28 +56,28 @@ class LoginForm extends Component {
               {
                 getFieldDecorator('username', {
                   rules: [{required: true, message:'请输入用户名'}]
-                })(<Input placeholder="用户名" />)
+                })(<Input placeholder="请输入用户名" />)
               }
             </Form.Item>
             <Form.Item label="密码" {...formItemLayout}>
               {
                 getFieldDecorator('password', {
                   rules: [{required: true, message:'请输入密码'}]
-                })(<Input.Password placeholder="密码" />)
+                })(<Input.Password placeholder="请输入密码" />)
               }
             </Form.Item>
             <Form.Item label="确认密码" {...formItemLayout}>
               {
                 getFieldDecorator('repassword', {
                   rules: [{required: true, message: '请确认密码'}]
-                })(<Input.Password placeholder="确认密码"/>)
+                })(<Input.Password placeholder="请确认密码"/>)
               }
             </Form.Item>
             <Form.Item label="邮箱" {...formItemLayout}>
               {
                 getFieldDecorator('email', {
                   rules: [{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }]
-                })(<Input />)
+                })(<Input placeholder="请输入邮箱" />)
               }
             </Form.Item>
             <Form.Item label="性别" {...formItemLayout}>
@@ -88,7 +96,14 @@ class LoginForm extends Component {
               {
                 getFieldDecorator('address', {
                   rules: [{ required: true, message: '请选择住址' }]
-                })(<Cascader options={options} placeholder="住址" />)
+                })(<Cascader options={options} placeholder="请选择住址" />)
+              }
+            </Form.Item>
+            <Form.Item label="手机号" {...formItemLayout}>
+              {
+                getFieldDecorator('phone', {
+                  rules: [{ required: true, message: '请输入手机号' }]
+                })(<Input addonBefore={selectBefore} placeholder="请输入手机号"  />)
               }
             </Form.Item>
           </Form>
