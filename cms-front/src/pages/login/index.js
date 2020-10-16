@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Input, Form, Radio, Cascader, Select } from 'antd';
+import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
@@ -24,18 +24,24 @@ class Login extends Component {
 
 class LoginForm extends Component {
   state = {
-    gender: 0
+    gender: 0,
+    autoCompleteResult: []
   }
-  handleChangeGender = (e) => {
+  handleGenderChange = (e) => {
     this.setState({
       gender: e.target.value
     })
   }
+  handleWebSiteChange = value => {
+    let autoCompleteResult = [];
+    if(value || !value.includes('@')) {
+      autoCompleteResult = ['gmail.com', '163.com', 'qq.com'].map(domain => `${value}@${domain}`);
+    }
+    this.setState({autoCompleteResult});
+  }
   render() {
-    // 解构antd提供的方法，可以很方便的校验表单
-    const {form: {getFieldDecorator}} = this.props;
     // 表单label栅格化
-    const formItemLayout = {
+    const FormItemLayout = {
       labelCol: { span:4 },
       wrapperCol: { span: 20 }
     }
@@ -50,61 +56,41 @@ class LoginForm extends Component {
     return (
       <div>
         <FormWrapper>
-          <Form>
+          <Form {...FormItemLayout}>
             <h3>登录</h3>
-            <Form.Item label="用户名" {...formItemLayout}>
-              {
-                getFieldDecorator('username', {
-                  rules: [{required: true, message:'请输入用户名'}]
-                })(<Input placeholder="请输入用户名" />)
-              }
+            <Form.Item label="用户名" name="username" rules={[{required: true, message:'请输入用户名'}]}>
+              <Input placeholder="请输入用户名" />
             </Form.Item>
-            <Form.Item label="密码" {...formItemLayout}>
-              {
-                getFieldDecorator('password', {
-                  rules: [{required: true, message:'请输入密码'}]
-                })(<Input.Password placeholder="请输入密码" />)
-              }
+            <Form.Item label="密码" name="password" rules={[{required: true, message:'请输入密码'}]}>
+              <Input.Password placeholder="请输入密码" />
             </Form.Item>
-            <Form.Item label="确认密码" {...formItemLayout}>
-              {
-                getFieldDecorator('repassword', {
-                  rules: [{required: true, message: '请确认密码'}]
-                })(<Input.Password placeholder="请确认密码"/>)
-              }
+            <Form.Item label="确认密码" name="repassword" rules={[{required: true, message: '请确认密码'}]}>
+              <Input.Password placeholder="请确认密码"/>
             </Form.Item>
-            <Form.Item label="邮箱" {...formItemLayout}>
-              {
-                getFieldDecorator('email', {
-                  rules: [{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }]
-                })(<Input placeholder="请输入邮箱" />)
-              }
+            <Form.Item label="邮箱" name="email" rules={[{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }]}>
+              <Input placeholder="请输入邮箱" />
             </Form.Item>
-            <Form.Item label="性别" {...formItemLayout}>
-              {
-                getFieldDecorator('gender', {
-                  // 初始值设定 initialValue
-                  initialValue: this.state.gender,
-                  rules: [{ required: true, message: '请选择性别' }]
-                })(<Radio.Group onChange={this.handleChangeGender}>
-                  <Radio value={0}>男</Radio>
-                  <Radio value={1}>女</Radio>
-                </Radio.Group>)
-              }
+            <Form.Item label="性别" name="gender" rules={[{ required: true, message: '请选择性别' }]}>
+              <Radio.Group onChange={this.handleGenderChange}>
+                <Radio value={0}>男</Radio>
+                <Radio value={1}>女</Radio>
+              </Radio.Group>
             </Form.Item>
-            <Form.Item label="住址" {...formItemLayout}>
-              {
-                getFieldDecorator('address', {
-                  rules: [{ required: true, message: '请选择住址' }]
-                })(<Cascader options={options} placeholder="请选择住址" />)
-              }
+            <Form.Item label="住址" name="address" rules={[{ required: true, message: '请选择住址' }]}>
+              <Cascader options={options} placeholder="请选择住址" />
             </Form.Item>
-            <Form.Item label="手机号" {...formItemLayout}>
-              {
-                getFieldDecorator('phone', {
-                  rules: [{ required: true, message: '请输入手机号' }]
-                })(<Input addonBefore={selectBefore} placeholder="请输入手机号"  />)
-              }
+            <Form.Item label="手机号" name="phone" rules={[{ required: true, message: '请输入手机号' }]}>
+              <Input addonBefore={selectBefore} placeholder="请输入手机号"  />
+            </Form.Item>
+            {/* 自动完成框 */}
+            <Form.Item label="个人主页" name="website">
+              <AutoComplete onSearch={this.handleWebSiteChange} placeholder="请输入个人主页">
+                {this.state.autoCompleteResult.map((email) => (
+                  <AutoComplete.Option key={email} value={email}>
+                    {email}
+                  </AutoComplete.Option>
+                ))}
+              </AutoComplete>
             </Form.Item>
           </Form>
         </FormWrapper>
@@ -112,8 +98,6 @@ class LoginForm extends Component {
     )
   }
 }
-
-LoginForm = Form.create()(LoginForm);
 
 const FormWrapper = styled.div`
   display: flex;
