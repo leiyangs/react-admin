@@ -8,6 +8,8 @@ import options from '../../utils/addressess';
 
 const { Content } = Layout;
 
+// 这个是antd3.x版本的写法
+
 class Login extends Component {
   render() {
     return (
