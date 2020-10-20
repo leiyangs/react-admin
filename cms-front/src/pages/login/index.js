@@ -101,7 +101,7 @@ class LoginForm extends Component {
             </AutoComplete>
           </Form.Item>
           <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }]} wrapperCol={{offset: 4, span: 20}}>
-            <Checkbox checked={this.state.agreement} onChange={this.handleAgreementChange}>我已同意本<a href="">协议</a></Checkbox>
+            <Checkbox onChange={this.handleAgreementChange}>我已同意本<a href="">协议</a></Checkbox>
           </Form.Item>
           <Form.Item wrapperCol={{span: 24}}>
             <Button type="primary" htmlType="submit" style={{width: "100%"}}>注册</Button>
