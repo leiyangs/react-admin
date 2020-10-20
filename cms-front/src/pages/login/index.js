@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete } from 'antd';
+import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete, Checkbox, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
@@ -25,7 +25,8 @@ class Login extends Component {
 class LoginForm extends Component {
   state = {
     gender: 0,
-    autoCompleteResult: []
+    autoCompleteResult: [],
+    agreement: true
   }
   handleGenderChange = (e) => {
     this.setState({
@@ -39,6 +40,9 @@ class LoginForm extends Component {
     }
     this.setState({autoCompleteResult});
   }
+  handleAgreementChange = e => {
+    this.setState({ agreement: e.target.checked })
+  }
   render() {
     // 表单label栅格化
     const FormItemLayout = {
@@ -50,7 +54,7 @@ class LoginForm extends Component {
       <Select className="select-before" defaultValue="010" style={{width:'80px'}}>
         <Option value='010'>010</Option>
         <Option value='020'>020</Option>
-        <Option value='030'>030</Option>
+        <Option value='030'>021</Option>
       </Select>
     )
     return (
@@ -91,6 +95,12 @@ class LoginForm extends Component {
                   </AutoComplete.Option>
                 ))}
               </AutoComplete>
+            </Form.Item>
+            <Form.Item name="agreement" wrapperCol={{offset: 4, span: 20}} rules={[{required: true, message: '请仔细阅读并同意本协议'}]}>
+              <Checkbox checked={this.state.agreement} onChange={this.handleAgreementChange}>我已同意本协议</Checkbox>
+            </Form.Item>
+            <Form.Item wrapperCol={{span: 24}}>
+              <Button type="primary" htmlType="submit" style={{width: "100%"}}>注册</Button>
             </Form.Item>
           </Form>
         </FormWrapper>
