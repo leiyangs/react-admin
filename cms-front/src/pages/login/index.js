@@ -49,6 +49,7 @@ class LoginForm extends Component {
       labelCol: { span:4 },
       wrapperCol: { span: 20 }
     }
+    // form中给字段赋默认值的方法
     const initialValues = {
       gender: this.state.gender,
       agreement: this.state.agreement
