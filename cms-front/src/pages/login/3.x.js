@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
-import options from '../../utils/addressess';
+import options from '../../utils/addresses';
 
 const { Content } = Layout;
 
