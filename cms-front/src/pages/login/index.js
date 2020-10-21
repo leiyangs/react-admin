@@ -105,6 +105,7 @@ class LoginForm extends Component {
           </Form.Item>
           <Form.Item wrapperCol={{span: 24}}>
             <Button type="primary" htmlType="submit" style={{width: "100%"}}>注册</Button>
+            已有账号？<a href="#">立刻登录</a>
           </Form.Item>
         </Form>
       </FormWrapper>
@@ -117,7 +118,7 @@ const FormWrapper = styled.div`
   justify-content: center;
   algin-items: center;
   // height: calc(100vh - 70px);
-  height: 100%;
+  min-height: 100%;
   margin: 120px auto;
   h3 {
     text-align: center;
