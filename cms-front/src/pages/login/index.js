@@ -69,22 +69,22 @@ class LoginForm extends Component {
       <FormWrapper>
         <Form {...FormItemLayout} initialValues={initialValues}>
           <h3>登录</h3>
-          <Form.Item label="用户名" name="username" rules={[{required: true, message:'请输入用户名'}]}>
+          <Form.Item label="用户名" name="username" rules={[{required: true, message:'请输入用户名', whitespace: true}]}>
             <Input placeholder="请输入用户名" prefix={<UserOutlined />} />
           </Form.Item>
-          <Form.Item label="密码" name="password" rules={[{required: true, message:'请输入密码'}]}>
+          <Form.Item label="密码" name="password" rules={[{required: true, message:'请输入密码'},{min: 4, message: '密码最少4位'},{max: 10, message: '密码最大10位'},]}>
             <Input.Password placeholder="请输入密码" prefix={<LockOutlined />} />
           </Form.Item>
           {/* dependencies 设置依赖，依赖字段改变，将触发该字段校验 */}
           {/* getFieldValue获取对应字段的值 */}
-          <Form.Item label="确认密码" name="repassword" dependencies={['password']} 
+          <Form.Item label="确认密码" name="repassword" dependencies={['password']}
             rules={[
-              {required: true, message: '请确认密码'}, 
+              {required: true, message: '请确认密码'},
               ({ getFieldValue }) => ({validator(rule, value) {
                 if(!value || getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject('两次密码必须一致')
+                return Promise.reject('两次密码不一致')
               }})
             ]}
           >
@@ -102,7 +102,7 @@ class LoginForm extends Component {
           <Form.Item label="住址" name="address" rules={[{ required: true, message: '请选择住址' }]}>
             <Cascader options={options} placeholder="请选择住址" />
           </Form.Item>
-          <Form.Item label="手机号" name="phone" rules={[{ required: true, message: '请输入手机号' }]}>
+          <Form.Item label="手机号" name="phone" rules={[{ required: true, message: '请输入手机号' }, {pattern: /1\d{10}/, message: '请输入正确的手机号'}]}>
             <Input addonBefore={selectBefore} placeholder="请输入手机号"  />
           </Form.Item>
           {/* 自动完成框 */}
