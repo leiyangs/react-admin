@@ -28,11 +28,13 @@ class LoginForm extends Component {
     autoCompleteResult: [],
     agreement: true
   }
+  // gender change
   handleGenderChange = (e) => {
     this.setState({
       gender: e.target.value
     })
   }
+  // 自动完成框后缀
   handleWebSiteChange = value => {
     let autoCompleteResult = [];
     if(value || !value.includes('@')) {
@@ -40,6 +42,7 @@ class LoginForm extends Component {
     }
     this.setState({autoCompleteResult});
   }
+  // agree change
   handleAgreementChange = e => {
     this.setState({ agreement: e.target.checked })
   }
@@ -72,7 +75,19 @@ class LoginForm extends Component {
           <Form.Item label="密码" name="password" rules={[{required: true, message:'请输入密码'}]}>
             <Input.Password placeholder="请输入密码" prefix={<LockOutlined />} />
           </Form.Item>
-          <Form.Item label="确认密码" name="repassword" rules={[{required: true, message: '请确认密码'}]}>
+          {/* dependencies 设置依赖，依赖字段改变，将触发该字段校验 */}
+          {/* getFieldValue获取对应字段的值 */}
+          <Form.Item label="确认密码" name="repassword" dependencies={['password']} 
+            rules={[
+              {required: true, message: '请确认密码'}, 
+              ({ getFieldValue }) => ({validator(rule, value) {
+                if(!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject('两次密码必须一致')
+              }})
+            ]}
+          >
             <Input.Password placeholder="请确认密码" prefix={<LockOutlined />} />
           </Form.Item>
           <Form.Item label="邮箱" name="email" rules={[{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }]}>

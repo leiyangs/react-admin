@@ -10,7 +10,7 @@ function getFieldItems(fields) {
   return fields.filter(field => field.visible).map((field, index) => {
     let layout = field.layout ? field.layout : FormItemLayout;
     return (
-      <FormItem label={field.label} name={field.name} {...layout}>
+      <FormItem label={field.label} name={field.name} {...layout} rules={field.rules}>
         <field.input/>
       </FormItem>
     )
