@@ -9,12 +9,18 @@ import options from '../../utils/addresses';
 const { Content } = Layout;
 
 class Login extends Component {
+  changeLoginStatus = () => {
+    this.props.dispatch({
+      type: 'login/save',
+      payload: {isLogin: !this.props.isLogin}
+    })
+  }
   render() {
     return (
       <>
         <Layout className={styles.layout}>
           <Content className={styles.content}>
-            <LoginForm/>
+            <LoginForm isLogin={this.props.isLogin} changeLoginStatus={this.changeLoginStatus}/>
           </Content>
         </Layout>
       </>
@@ -68,7 +74,7 @@ class LoginForm extends Component {
     return (
       <FormWrapper>
         <Form {...FormItemLayout} initialValues={initialValues}>
-          <h3>登录</h3>
+          <h3>欢迎{this.props.isLogin?'登陆':'注册'}</h3>
           <Form.Item label="用户名" name="username" rules={[{required: true, message:'请输入用户名', whitespace: true}]}>
             <Input placeholder="请输入用户名" prefix={<UserOutlined />} />
           </Form.Item>
@@ -116,11 +122,12 @@ class LoginForm extends Component {
             </AutoComplete>
           </Form.Item>
           <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }]} wrapperCol={{offset: 4, span: 20}}>
-            <Checkbox onChange={this.handleAgreementChange}>我已同意本<a href="">协议</a></Checkbox>
+            <Checkbox onChange={this.handleAgreementChange}>我已同意本<a href="void:javascript(0)">协议</a></Checkbox>
           </Form.Item>
           <Form.Item wrapperCol={{span: 24}}>
             <Button type="primary" htmlType="submit" style={{width: "100%"}}>注册</Button>
-            已有账号？<a href="#">立刻登录</a>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            已有账号？<a onClick={this.props.changeLoginStatus}>立刻登录</a>
           </Form.Item>
         </Form>
       </FormWrapper>
@@ -150,5 +157,5 @@ const FormWrapper = styled.div`
 
 // 一个页面路由会对应一个子状态 login
 export default connect(
-  state => state
+  state => state.login
 )(Login);
