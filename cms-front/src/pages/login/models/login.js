@@ -1,7 +1,7 @@
 export default {
   namespase: 'login',
   state: {
-    isLogin: true
+    isLogin: false
   },
   reducers: {
     save(state, action) {

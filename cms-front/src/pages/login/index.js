@@ -5,6 +5,7 @@ import styles from './index.css';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
 import options from '../../utils/addresses';
+import getFieldItems from '../../utils/getFieldItems';
 
 const { Content } = Layout;
 
@@ -53,6 +54,7 @@ class LoginForm extends Component {
     this.setState({ agreement: e.target.checked })
   }
   render() {
+    let isLogin = this.props.isLogin;
     // 表单label栅格化
     const FormItemLayout = {
       labelCol: { span:4 },
@@ -71,59 +73,43 @@ class LoginForm extends Component {
         <Option value='030'>021</Option>
       </Select>
     )
+    const FieldItems = getFieldItems([
+      { label: '用户名',  name: 'username', visible: true, rules: [{required: true, message:'请输入用户名', whitespace: true}], input: <Input placeholder="请输入用户名" prefix={<UserOutlined />} />},
+      { label: '密码', name: 'password', visible: true, rules: [{required: true, message:'请输入密码'},{min: 4, message: '密码最少4位'},{max: 10, message: '密码最大10位'}], input: <Input.Password placeholder="请输入密码" prefix={<LockOutlined />} />},
+      { label: '确认密码', name: 'repassword', visible: !isLogin, extra:{dependencies: ['password']}, rules: [
+        {required: true, message: '请确认密码'},
+        ({ getFieldValue }) => ({validator(rule, value) {
+          if(!value || getFieldValue('password') === value) {
+            return Promise.resolve();
+          }
+          return Promise.reject('两次密码不一致')
+        }})
+      ], input: <Input.Password placeholder="请确认密码" prefix={<LockOutlined />} /> },
+      { label: '邮箱', name: 'email', visible: !isLogin, rules: [{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }], input: <Input placeholder="请输入邮箱" prefix={<MailOutlined />} /> },
+      { label: '性别', name: 'gender', visible: !isLogin, rules: [{ required: true, message: '请选择性别' }], input:
+        <Radio.Group onChange={this.handleGenderChange} value={this.state.gender} >
+          <Radio value={0}>男</Radio>
+          <Radio value={1}>女</Radio>
+        </Radio.Group>
+      },
+      { label: '住址', name: 'address', visible: !isLogin, rules: [{ required: true, message: '请选择住址' }], input: <Cascader options={options} placeholder="请选择住址" /> },
+      { label: '手机号', name: 'phone', visible: !isLogin, rules:[{ required: true, message: '请输入手机号' }, {pattern: /1\d{10}/, message: '请输入正确的手机号'}], input: <Input addonBefore={selectBefore} placeholder="请输入手机号"  /> },
+      { label: '个人主页', name: 'website', visible: !isLogin, input: 
+        <AutoComplete onSearch={this.handleWebSiteChange} placeholder="请输入个人主页">
+          {this.state.autoCompleteResult.map((email) => (
+            <AutoComplete.Option key={email} value={email}>
+              {email}
+            </AutoComplete.Option>
+          ))}
+        </AutoComplete>
+      },
+      { label:'', name: 'agreement', visible: true, extra: {valuePropName: 'checked'}, rules: [{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }], layout: {wrapperCol:{offset: 4, span: 20}}, input: <Checkbox onChange={this.handleAgreementChange}>我已同意本<a>协议</a></Checkbox> }
+    ])
     return (
       <FormWrapper>
         <Form {...FormItemLayout} initialValues={initialValues}>
-          <h3>欢迎{this.props.isLogin?'登陆':'注册'}</h3>
-          <Form.Item label="用户名" name="username" rules={[{required: true, message:'请输入用户名', whitespace: true}]}>
-            <Input placeholder="请输入用户名" prefix={<UserOutlined />} />
-          </Form.Item>
-          <Form.Item label="密码" name="password" rules={[{required: true, message:'请输入密码'},{min: 4, message: '密码最少4位'},{max: 10, message: '密码最大10位'},]}>
-            <Input.Password placeholder="请输入密码" prefix={<LockOutlined />} />
-          </Form.Item>
-          {/* dependencies 设置依赖，依赖字段改变，将触发该字段校验 */}
-          {/* getFieldValue获取对应字段的值 */}
-          <Form.Item label="确认密码" name="repassword" dependencies={['password']}
-            rules={[
-              {required: true, message: '请确认密码'},
-              ({ getFieldValue }) => ({validator(rule, value) {
-                if(!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject('两次密码不一致')
-              }})
-            ]}
-          >
-            <Input.Password placeholder="请确认密码" prefix={<LockOutlined />} />
-          </Form.Item>
-          <Form.Item label="邮箱" name="email" rules={[{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }]}>
-            <Input placeholder="请输入邮箱" prefix={<MailOutlined />} />
-          </Form.Item>
-          <Form.Item label="性别" name="gender" rules={[{ required: true, message: '请选择性别' }]}>
-            <Radio.Group onChange={this.handleGenderChange} value={this.state.gender} >
-              <Radio value={0}>男</Radio>
-              <Radio value={1}>女</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="住址" name="address" rules={[{ required: true, message: '请选择住址' }]}>
-            <Cascader options={options} placeholder="请选择住址" />
-          </Form.Item>
-          <Form.Item label="手机号" name="phone" rules={[{ required: true, message: '请输入手机号' }, {pattern: /1\d{10}/, message: '请输入正确的手机号'}]}>
-            <Input addonBefore={selectBefore} placeholder="请输入手机号"  />
-          </Form.Item>
-          {/* 自动完成框 */}
-          <Form.Item label="个人主页" name="website">
-            <AutoComplete onSearch={this.handleWebSiteChange} placeholder="请输入个人主页">
-              {this.state.autoCompleteResult.map((email) => (
-                <AutoComplete.Option key={email} value={email}>
-                  {email}
-                </AutoComplete.Option>
-              ))}
-            </AutoComplete>
-          </Form.Item>
-          <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }]} wrapperCol={{offset: 4, span: 20}}>
-            <Checkbox onChange={this.handleAgreementChange}>我已同意本<a href="void:javascript(0)">协议</a></Checkbox>
-          </Form.Item>
+          <h3>欢迎{isLogin?'登陆':'注册'}</h3>
+          {FieldItems}
           <Form.Item wrapperCol={{span: 24}}>
             <Button type="primary" htmlType="submit" style={{width: "100%"}}>注册</Button>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
