@@ -10,18 +10,30 @@ import getFieldItems from '../../utils/getFieldItems';
 const { Content } = Layout;
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.loginForm = React.createRef();
+  }
   changeLoginStatus = () => {
     this.props.dispatch({
       type: 'login/save',
       payload: {isLogin: !this.props.isLogin}
     })
   }
+  handleSubmit = (values) => {
+    console.log(values)
+  }
   render() {
     return (
       <>
         <Layout className={styles.layout}>
           <Content className={styles.content}>
-            <LoginForm isLogin={this.props.isLogin} changeLoginStatus={this.changeLoginStatus}/>
+            <LoginForm
+              isLogin={this.props.isLogin}
+              changeLoginStatus={this.changeLoginStatus}
+              handleSubmit={this.handleSubmit}
+              ref={this.loginForm}
+            />
           </Content>
         </Layout>
       </>
@@ -54,7 +66,7 @@ class LoginForm extends Component {
     this.setState({ agreement: e.target.checked })
   }
   render() {
-    let isLogin = this.props.isLogin;
+    let { isLogin, handleSubmit, changeLoginStatus } = this.props;
     // 表单label栅格化
     const FormItemLayout = {
       labelCol: { span:4 },
@@ -107,13 +119,14 @@ class LoginForm extends Component {
     ])
     return (
       <FormWrapper>
-        <Form {...FormItemLayout} initialValues={initialValues}>
+        {/* onFinish等于原生表单onSubmit */}
+        <Form {...FormItemLayout} initialValues={initialValues} onFinish={handleSubmit}>
           <h3>欢迎{isLogin?'登陆':'注册'}</h3>
           {FieldItems}
           <Form.Item wrapperCol={{span: 24}}>
             <Button type="primary" htmlType="submit" style={{width: "100%"}}>注册</Button>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            已有账号？<a onClick={this.props.changeLoginStatus}>立刻登录</a>
+            已有账号？<a onClick={changeLoginStatus}>立刻登录</a>
           </Form.Item>
         </Form>
       </FormWrapper>
