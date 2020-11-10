@@ -3,14 +3,14 @@
 'use strict';
 
 module.exports = appInfo => {
-  const config = exports = {};
+  const config = exports = {}; // 公共配置
 
   config.keys = appInfo.name + '_1597755939854_6253';
 
   config.middleware = [];
 
   const userConfig = {
-    security: {
+    security: { // 安全
       csrf: false,
     },
     mysql: {
