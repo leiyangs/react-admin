@@ -4,7 +4,7 @@ const Controller = require('egg').Controller;
 const svgCaptcha = require('svg-captcha');
 
 class IndexController extends Controller {
-  async captcha() {
+  async captcha() { // 获取验证码
     const { ctx } = this;
     const captcha = svgCaptcha.create({});
     // egg内置了session插件，直接ctx.session
@@ -12,7 +12,7 @@ class IndexController extends Controller {
     ctx.set('Content-type', 'image/svg+xml');
     ctx.body = captcha.data;
   }
-  async checkCaptcha() {
+  async checkCaptcha() { // 校验验证码
     const { ctx } = this;
     const { captcha } = ctx.request.body;
     if(ctx.session.captcha === captcha) {

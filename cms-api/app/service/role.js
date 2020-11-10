@@ -20,6 +20,7 @@ class RoleService extends BaseService {
     const conn = await app.mysql.beginTransaction();
     let result = true;
     try {
+      // 全删全加
       await conn.query('DELETE FROM role_user WHERE role_id = ?', [ roleId ]);
       for (let i = 0; i < userIds.length; i++) {
         await conn.insert('role_user', { role_id: roleId, user_id: userIds[i] });
