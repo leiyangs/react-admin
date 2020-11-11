@@ -8,5 +8,5 @@ export default function request(url, options={}) {
   options.headers['Accept'] = 'application/json';
   options.method = options.method || 'get';
   options.credentials = 'include'; // 跨域时候传递cookie 配合服务端使用
-  return fetch(url, options);
+  return fetch(url, options).then(res => res.json());
 }
