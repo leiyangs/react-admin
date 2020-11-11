@@ -21,8 +21,14 @@ class Login extends Component {
     })
   }
   handleSubmit = (values) => {
-    console.log(values)
-    console.log(this.loginFormRef);
+    // console.log(values)
+    // console.log(this.loginFormRef);
+    // console.log(this.props)
+    if(!values) return ;
+    this.props.dispatch({
+      type: 'login/signup',
+      payload: values
+    })
   }
   render() {
     return (
@@ -57,8 +63,8 @@ class LoginForm extends Component {
   // 自动完成框后缀
   handleWebSiteChange = value => {
     let autoCompleteResult = [];
-    if(value || !value.includes('@')) {
-      autoCompleteResult = ['gmail.com', '163.com', 'qq.com'].map(domain => `${value}@${domain}`);
+    if(value || !value.includes('.')) {
+      autoCompleteResult = ['.com', '.orm', '.cn'].map(domain => `${value}${domain}`);
     }
     this.setState({autoCompleteResult});
   }

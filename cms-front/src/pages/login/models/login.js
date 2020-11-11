@@ -10,8 +10,9 @@ export default {
       return {...state, ...action.payload}; // action.payload是组件中dispatch过来的isLogin，覆盖state中的isLogin
     }
   },
-  effects: { // saga
+  effects: { // saga generator
     *signup({payload}, {put, call}) {
+      yield console.log(payload);
       // let result = yield call(service.signup, payload);
       // if(result.code == 0) {
       //   yield put({type: 'save', payload: {isLogin: true}})
