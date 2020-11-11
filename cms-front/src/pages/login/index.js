@@ -12,7 +12,7 @@ const { Content } = Layout;
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.loginForm = React.createRef();
+    this.loginFormRef = React.createRef();
   }
   changeLoginStatus = () => {
     this.props.dispatch({
@@ -22,6 +22,7 @@ class Login extends Component {
   }
   handleSubmit = (values) => {
     console.log(values)
+    console.log(this.loginFormRef);
   }
   render() {
     return (
@@ -32,7 +33,7 @@ class Login extends Component {
               isLogin={this.props.isLogin}
               changeLoginStatus={this.changeLoginStatus}
               handleSubmit={this.handleSubmit}
-              ref={this.loginForm}
+              ref={this.loginFormRef}
             />
           </Content>
         </Layout>

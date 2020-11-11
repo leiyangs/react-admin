@@ -138,7 +138,7 @@ class LoginForm extends Component {
   }
 }
 
-LoginForm = Form.create()(LoginForm);
+LoginForm = Form.create()(LoginForm); // antd4中删除
 
 const FormWrapper = styled.div`
   display: flex;
