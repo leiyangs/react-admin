@@ -7,6 +7,20 @@ class UserController extends BaseController {
     super(...args);
     this.entity = 'user';
   }
+  async signup() {
+    const { ctx } = this;
+    const body = ctx.request.body; // 注册传入的数据
+    let { repassword, address, agreement, ...user } = body;
+    if (repassword !== user.password) {
+      this.error('密码与确认密码不一致');
+    }
+    if (!agreement) {
+      this.error('请同意协议后再试');
+    }
+    address = address.join('-');
+    user.address = address;
+    // const result = service.
+  }
 }
 
 module.exports = UserController;
