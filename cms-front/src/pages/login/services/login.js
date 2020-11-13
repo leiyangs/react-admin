@@ -3,13 +3,13 @@ import request from '../../../utils/request';
 export function signup(data) {
   return request('/api/signup', {
     method: 'post',
-    body: data
+    body: JSON.stringify(data)
   })
 }
 // 登陆
 export function signin(data) {
   return request('/api/signin', {
     method: 'post',
-    body: data
+    body: JSON.stringify(data)
   })
 }

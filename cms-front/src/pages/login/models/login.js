@@ -13,7 +13,6 @@ export default {
   },
   effects: { // saga generator
     *signup({payload}, {put, call}) {
-      yield console.log(payload);
       let result = yield call(service.signup, payload);
       if(result.code == 0) {
         yield put({type: 'save', payload: {isLogin: true}})

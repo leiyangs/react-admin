@@ -24,7 +24,7 @@ module.exports = app => {
   // 校验验证码
   router.post('/api/checkCaptcha', controller.index.checkCaptcha);
   // 注册
-  router.post('/api/singup', controller.user.signup);
+  router.post('/api/signup', controller.user.signup);
   // 登录
   // router.post('/api/signin', controller.user.signin);
 };
