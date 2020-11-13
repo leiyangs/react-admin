@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import * as service from '../services/login';
 
 export default {
   namespase: 'login',
@@ -13,12 +14,13 @@ export default {
   effects: { // saga generator
     *signup({payload}, {put, call}) {
       yield console.log(payload);
-      // let result = yield call(service.signup, payload);
-      // if(result.code == 0) {
-      //   yield put({type: 'save', payload: {isLogin: true}})
-      // }else {
-      //   message.error(result.error);
-      // }
+      let result = yield call(service.signup, payload);
+      if(result.code == 0) {
+        yield put({type: 'save', payload: {isLogin: true}})
+        message.success(result.data);
+      }else {
+        message.error(result.error);
+      }
     }
   }
 }

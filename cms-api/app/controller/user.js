@@ -19,7 +19,7 @@ class UserController extends BaseController {
     }
     address = address.join('-');
     user.address = address;
-    // const result = service.
+    // const result = await app.mysql.insert('user', user);
   }
 }
 

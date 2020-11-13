@@ -1,4 +1,5 @@
-import fetch from 'dva/fetch';
+// import fetch from 'dva/fetch'; // 这种引入方式下个版本会删除
+const fetch = require('dva').fetch;
 const BASE_URL = 'hppt://10.10.18.150:7001';
 
 export default function request(url, options={}) {

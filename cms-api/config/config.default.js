@@ -12,6 +12,10 @@ module.exports = appInfo => {
   const userConfig = {
     security: { // 安全
       csrf: false,
+      domainWhiteList: ['http://10.10.18.150:7001'], // egg-cors跨域白名单
+    },
+    cors: {
+      credentials: true, // egg-cors允许传递cookie
     },
     mysql: {
       client: {
