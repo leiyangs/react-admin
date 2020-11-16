@@ -52,7 +52,8 @@ class LoginForm extends Component {
   state = {
     gender: 0,
     autoCompleteResult: [],
-    agreement: true
+    agreement: true,
+    prefix: '86'
   }
   // gender change
   handleGenderChange = (e) => {
@@ -82,15 +83,17 @@ class LoginForm extends Component {
     // form中给字段赋默认值的方法
     const initialValues = {
       gender: this.state.gender,
-      agreement: this.state.agreement
+      agreement: this.state.agreement,
+      prefix: this.state.prefix
     }
     const { Option } = Select;
-    const selectBefore = (
-      <Select className="select-before" defaultValue="010" style={{width:'80px'}}>
-        <Option value='010'>010</Option>
-        <Option value='020'>020</Option>
-        <Option value='030'>021</Option>
-      </Select>
+    const prefixSelector = (
+      <Form.Item name="prefix" noStyle>
+        <Select className="select-before" style={{width:'80'}}>
+          <Option value="86">+86</Option>
+          <Option value="87">+87</Option>
+        </Select>
+      </Form.Item>
     )
     const FieldItems = getFieldItems([
       { label: '用户名',  name: 'username', visible: true, rules: [{required: true, message:'请输入用户名', whitespace: true}], input: <Input placeholder="请输入用户名" prefix={<UserOutlined />} />},
@@ -112,7 +115,7 @@ class LoginForm extends Component {
         </Radio.Group>
       },
       { label: '住址', name: 'address', visible: !isLogin, rules: [{ required: true, message: '请选择住址' }], input: <Cascader options={options} placeholder="请选择住址" /> },
-      { label: '手机号', name: 'phone', visible: !isLogin, rules:[{ required: true, message: '请输入手机号' }, {pattern: /1\d{10}/, message: '请输入正确的手机号'}], input: <Input addonBefore={selectBefore} placeholder="请输入手机号"  /> },
+      { label: '手机号', name: 'phone', visible: !isLogin, rules:[{ required: true, message: '请输入手机号' }, {pattern: /1\d{10}/, message: '请输入正确的手机号'}], input: <Input addonBefore={prefixSelector} placeholder="请输入手机号"  /> },
       { label: '个人主页', name: 'website', visible: !isLogin, input: 
         <AutoComplete onSearch={this.handleWebSiteChange} placeholder="请输入个人主页">
           {this.state.autoCompleteResult.map((email) => (

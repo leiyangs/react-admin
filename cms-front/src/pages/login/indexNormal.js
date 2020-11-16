@@ -66,11 +66,12 @@ class LoginForm extends Component {
     }
     const { Option } = Select;
     const selectBefore = (
-      <Select className="select-before" defaultValue="010" style={{width:'80px'}}>
-        <Option value='010'>010</Option>
-        <Option value='020'>020</Option>
-        <Option value='030'>021</Option>
-      </Select>
+      <Form.Item name="prefix" noStyle>
+        <Select className="select-before" defaultValue="86" style={{width:'80'}}>
+          <Option value="86">+86</Option>
+          <Option value="87">+87</Option>
+        </Select>
+      </Form.Item>
     )
     return (
       <FormWrapper>

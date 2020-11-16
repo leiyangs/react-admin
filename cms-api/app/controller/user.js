@@ -10,7 +10,7 @@ class UserController extends BaseController {
   async signup() {
     const { ctx, app } = this;
     const body = ctx.request.body; // 注册传入的数据
-    let { repassword, address, agreement, ...user } = body;
+    let { repassword, address, agreement, prefix, ...user } = body;
     if (repassword !== user.password) {
       this.error('密码与确认密码不一致');
     }
@@ -19,11 +19,12 @@ class UserController extends BaseController {
     }
     address = address.join('-');
     user.address = address;
+    user.phone = `${prefix}-${user.phone}`;
     const result = await app.mysql.insert('user', user);
     if (result.affectedRows > 0) {
-      this.success('注册成功')
-    }else {
-      this.error('注册失败')
+      this.success('注册成功');
+    } else {
+      this.error('注册失败');
     }
   }
 }
