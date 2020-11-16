@@ -134,9 +134,9 @@ class LoginForm extends Component {
           <h3>欢迎{isLogin?'登陆':'注册'}</h3>
           {FieldItems}
           <Form.Item wrapperCol={{span: 24}}>
-            <Button type="primary" htmlType="submit" style={{width: "100%"}}>注册</Button>
+            <Button type="primary" htmlType="submit" style={{width: "100%"}}>{isLogin?'登录':'注册'}</Button>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            已有账号？<a onClick={changeLoginStatus}>立刻登录</a>
+            {isLogin?'没有账号？':'已有账号？'}<a onClick={changeLoginStatus}>{isLogin?'立即注册':'立即登录'}</a>
           </Form.Item>
         </Form>
       </FormWrapper>
