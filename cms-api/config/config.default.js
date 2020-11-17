@@ -12,12 +12,13 @@ module.exports = appInfo => {
   const userConfig = {
     security: { // 安全
       csrf: false,
-      domainWhiteList: ['*'], // egg-cors跨域白名单  Access-Control-Allow-Origin
+      domainWhiteList: [ '*' ], // egg-cors跨域白名单  Access-Control-Allow-Origin
     },
     cors: {
       credentials: true, // egg-cors允许传递cookie
-      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
     },
+    JWT_SECRET: 'yang', // jwt密钥
     mysql: {
       client: {
         host: 'localhost',

@@ -9,5 +9,5 @@ exports.mysql = {
 // 允许跨域插件
 exports.cors = {
   enable: true,
-  package: 'egg-cors'
-}
+  package: 'egg-cors',
+};

@@ -14,11 +14,21 @@ export default {
   effects: { // saga generator
     *signup({payload}, {put, call}) {
       let result = yield call(service.signup, payload);
-      if(result.code == 0) {
+      if(result.code === 0) {
         yield put({type: 'save', payload: {isLogin: true}})
         message.success(result.data);
       }else {
-        message.error(result.error);
+        message.error(result.data);
+      }
+    },
+    *signin({payload}, {put, call}) {
+      let result = yield call(service.signin, payload);
+      if(result.code === 0) {
+        message.success(result.data);
+        // 把返回的token存到localstorage中，方便重新获取
+        // 如果登录成功跳转到首页
+      }else {
+        message.error(result.data);
       }
     }
   }

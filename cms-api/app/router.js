@@ -26,5 +26,5 @@ module.exports = app => {
   // 注册
   router.post('/api/signup', controller.user.signup);
   // 登录
-  // router.post('/api/signin', controller.user.signin);
+  router.post('/api/signin', controller.user.signin);
 };

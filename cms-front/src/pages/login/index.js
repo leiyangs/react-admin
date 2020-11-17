@@ -26,7 +26,7 @@ class Login extends Component {
     // console.log(this.props)
     if(!values) return ;
     this.props.dispatch({
-      type: 'login/signup',
+      type: this.props.isLogin ? 'login/signin' : 'login/signup', // 如果是登录态，就调用的登录接口，反之调用注册
       payload: values
     })
   }
@@ -125,13 +125,14 @@ class LoginForm extends Component {
           ))}
         </AutoComplete>
       },
-      { label:'', name: 'agreement', visible: true, extra: {valuePropName: 'checked'}, rules: [{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }], layout: {wrapperCol:{offset: 4, span: 20}}, input: <Checkbox onChange={this.handleAgreementChange}>我已同意本<a>协议</a></Checkbox> }
+      // eslint-disable-next-line jsx-a11y/anchor-is-valid
+      { label:'', name: 'agreement', visible: !isLogin, extra: {valuePropName: 'checked'}, rules: [{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }], layout: {wrapperCol:{offset: 4, span: 20}}, input: <Checkbox onChange={this.handleAgreementChange}>我已同意本<a>协议</a></Checkbox> }
     ])
     return (
       <FormWrapper>
         {/* onFinish等于原生表单onSubmit */}
         <Form {...FormItemLayout} initialValues={initialValues} onFinish={handleSubmit}>
-          <h3>欢迎{isLogin?'登陆':'注册'}</h3>
+          <h3>欢迎{isLogin?'登录':'注册'}</h3>
           {FieldItems}
           <Form.Item wrapperCol={{span: 24}}>
             <Button type="primary" htmlType="submit" style={{width: "100%"}}>{isLogin?'登录':'注册'}</Button>
