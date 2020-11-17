@@ -14,9 +14,9 @@ class BaseService extends Service {
     // const list =  await this.app.mysql.query('SELECT * FROM user ORDER BY id asc limit 2,3');
     const list = await this.app.mysql.select(this.entity, {
       where,
-      orders: [ [ 'id', 'asc' ] ],
+      orders: [[ 'id', 'asc' ]],
       offset: (pageNum - 1) * pageSize, // 偏移量，计算前面有几条
-      limit: pageSize
+      limit: pageSize,
     });
     const total = await this.app.mysql.count(this.entity, where); // 查询条件下的总条数
     return { list, total };

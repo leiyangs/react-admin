@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = app => {
-  const { router, controller } = app;
-  router.get('/', controller.home.index);
+  const { router, controller, middleware } = app;
+  const auth = middleware.auth();
+  router.get('/', auth, controller.home.index); // 在router中执行中间件
   // CRUD写法，包含增删改查
   // resources这种写法一行代替多行 相当于分开写合起来 router.get('/api/user', controller.user.index); router.post('/api/user', controller.user.create);
   router.resources('user', '/api/user', controller.user);
