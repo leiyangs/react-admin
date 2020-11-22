@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete, Checkbox, Button } from 'antd';
+import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete, Checkbox, Button, Row, Col } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
 import options from '../../utils/addresses';
 import getFieldItems from '../../utils/getFieldItems';
+const captchaUrl = `http://127.0.0.1:7001/api/captcha?ts=`;
 
 const { Content } = Layout;
 
@@ -73,6 +74,9 @@ class LoginForm extends Component {
   handleAgreementChange = e => {
     this.setState({ agreement: e.target.checked })
   }
+  refreshCaptcha = e => {
+    e.target.src = captchaUrl + new Date(); // 每次请求路径不同会改变验证码
+  }
   render() {
     let { isLogin, handleSubmit, changeLoginStatus } = this.props;
     // 表单label栅格化
@@ -124,6 +128,16 @@ class LoginForm extends Component {
             </AutoComplete.Option>
           ))}
         </AutoComplete>
+      },
+      { label: '验证码', name: 'captcha', visible: !isLogin, rules: [{required: true, message: '请输入验证码'}], input:
+        <Row>
+          <Col span={12}>
+            <Input placeholder="请输入验证码"/>
+          </Col>
+          <Col span={12}>
+            <img src={captchaUrl} alt="验证码" onClick={this.refreshCaptcha} style={{width: '100%', height: '32px', cursor: 'pointer'}}/>
+          </Col>
+        </Row>
       },
       // eslint-disable-next-line jsx-a11y/anchor-is-valid
       { label:'', name: 'agreement', visible: !isLogin, extra: {valuePropName: 'checked'}, rules: [{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }], layout: {wrapperCol:{offset: 4, span: 20}}, input: <Checkbox onChange={this.handleAgreementChange}>我已同意本<a>协议</a></Checkbox> }

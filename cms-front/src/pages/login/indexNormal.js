@@ -1,11 +1,12 @@
 // form正常写法，不套用utils
 import React, { Component } from 'react';
-import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete, Checkbox, Button } from 'antd';
+import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete, Checkbox, Button, Row, Col } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import styles from './index.css';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
 import options from '../../utils/addresses';
+const captchaUrl = `http://127.0.0.1:7001/api/captcha?ts=`;
 
 const { Content } = Layout;
 
@@ -122,6 +123,16 @@ class LoginForm extends Component {
                 </AutoComplete.Option>
               ))}
             </AutoComplete>
+          </Form.Item>
+          <Form.Item label="验证码" name="captcha" rules={[{required: true, message: '请输入验证码'}]}>
+            <Row>
+              <Col span={12}>
+                <Input placeholder="请输入验证码"/>
+              </Col>
+              <Col span={12}>
+                <img src={captchaUrl} alt="验证码" onClick={this.refreshCaptcha} style={{width: '100%', height: '32px'}}/>
+              </Col>
+            </Row>
           </Form.Item>
           <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: (rule, value) => value ? Promise.resolve() : Promise.reject('请仔细阅读并同意本协议') }]} wrapperCol={{offset: 4, span: 20}}>
             <Checkbox onChange={this.handleAgreementChange}>我已同意本<a href="void:javascript(0)">协议</a></Checkbox>
