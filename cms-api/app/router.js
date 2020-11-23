@@ -23,7 +23,7 @@ module.exports = app => {
   // 验证码
   router.get('/api/captcha', controller.index.captcha);
   // 校验验证码
-  router.post('/api/checkCaptcha', controller.index.checkCaptcha);
+  // router.post('/api/checkCaptcha', controller.index.checkCaptcha);
   // 注册
   router.post('/api/signup', controller.user.signup);
   // 登录

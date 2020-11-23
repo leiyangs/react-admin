@@ -1,9 +1,9 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const BaseController = require('./base');
 const svgCaptcha = require('svg-captcha');
 
-class IndexController extends Controller {
+class IndexController extends BaseController {
   async captcha() { // 获取验证码
     const { ctx } = this;
     const options = {// 参数
@@ -16,6 +16,7 @@ class IndexController extends Controller {
     const captcha = svgCaptcha.create(options);
     // egg内置了session插件，直接ctx.session
     ctx.session.captcha = captcha.text;
+    console.log(captcha.text, ctx.session.captcha)
     ctx.set('Content-type', 'image/svg+xml');
     ctx.body = captcha.data;
   }

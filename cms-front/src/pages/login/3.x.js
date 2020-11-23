@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete } from 'antd';
-import styles from './index.css';
+import styles from './index.scss';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
 import options from '../../utils/addresses';

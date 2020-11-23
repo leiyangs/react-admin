@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Input, Form, Radio, Cascader, Select, AutoComplete, Checkbox, Button, Row, Col } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
-import styles from './index.css';
+import styles from './index.scss';
 import styled from 'styled-components';
 import { connect } from 'dva'; // react-redux用来连接仓库和组件
 import options from '../../utils/addresses';
@@ -162,7 +162,7 @@ class LoginForm extends Component {
 const FormWrapper = styled.div`
   display: flex;
   justify-content: center;
-  algin-items: center;
+  align-items: center;
   // height: calc(100vh - 70px);
   min-height: 100%;
   margin: 120px auto;

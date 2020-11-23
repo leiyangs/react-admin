@@ -19,7 +19,7 @@ class UserController extends BaseController {
     if (!agreement) {
       return this.error('请同意协议后再试');
     }
-    if(!captcha || !ctx.session.captcha || captcha !== ctx.session.captcha ) {
+    if (!captcha || !ctx.session.captcha || captcha.toLowerCase() !== ctx.session.captcha.toLowerCase()) {
       return this.error('验证码不正确');
     }
     // 处理地址
@@ -37,10 +37,12 @@ class UserController extends BaseController {
   async signin() {
     const { ctx, app, config } = this;
     const { password, username, captcha } = ctx.request.body;
-    if(!captcha || !ctx.session.captcha || captcha !== ctx.session.captcha ) {
-      return this.error('验证码不正确');
-    }
+    console.log(captcha, ctx.session.captcha)
+    // if (!captcha || !ctx.session.captcha || captcha.toLowerCase() !== ctx.session.captcha.toLowerCase()) {
+    //   return this.error('验证码不正确');
+    // }
     const result = await app.mysql.get('user', { password, username }); // egg中mysql的方法，查不到会返回null，查到返回本条数据
+    console.log(result)
     if (result) {
       // mysql返回的result不是纯对象，jwt sign签名只能使用纯对象
       const user = JSON.parse(JSON.stringify(result));
