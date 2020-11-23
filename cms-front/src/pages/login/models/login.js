@@ -39,6 +39,7 @@ export default {
       }
     },
     *loadUser({put}) {
+      debugger
       const token=localStorage.getItem('token');
       if (token) {
         debugger
@@ -48,5 +49,14 @@ export default {
         yield put(routerRedux.push('/login'));
       }
     }
-  }
+  },
+  // subscriptions: {
+  //   setup({dispatch, history}) {
+  //     history.listen(({pathname,query}) => {
+  //       if(pathname === '/admin') {
+  //         dispatch({type:'login/loadUser'});
+  //       }
+  //     })
+  //   }
+  // }
 }
