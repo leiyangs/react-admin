@@ -11,7 +11,8 @@ class UserController extends BaseController {
   async signup() {
     const { ctx, app } = this;
     const body = ctx.request.body; // 注册传入的数据
-    let { repassword, address, agreement, prefix, ...user, captcha } = body;
+    let { repassword, address, agreement, prefix, captcha, ...user } = body;
+    console.log(captcha, ctx.session.captcha)
     if (repassword !== user.password) {
       return this.error('密码与确认密码不一致');
     }

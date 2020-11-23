@@ -17,7 +17,7 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: { webpackChunkName: true },
-      title: 'cms-front',
+      title: 'cms辅助系统',
       dll: true,
       locale: {
         enable: true,

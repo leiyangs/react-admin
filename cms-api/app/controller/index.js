@@ -6,7 +6,14 @@ const svgCaptcha = require('svg-captcha');
 class IndexController extends Controller {
   async captcha() { // 获取验证码
     const { ctx } = this;
-    const captcha = svgCaptcha.create({});
+    const options = {// 参数
+      width: 180,
+      height: 32,
+      fontSize: 50,
+      color: true,
+      noise: 2,
+    }
+    const captcha = svgCaptcha.create(options);
     // egg内置了session插件，直接ctx.session
     ctx.session.captcha = captcha.text;
     ctx.set('Content-type', 'image/svg+xml');
