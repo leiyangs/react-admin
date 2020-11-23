@@ -6,7 +6,7 @@ import { routerRedux } from 'dva';
 export default {
   namespase: 'login',
   state: {
-    isLogin: false,
+    isLogin: true,
     user: null, // 当前登录用户的信息
   },
   reducers: {

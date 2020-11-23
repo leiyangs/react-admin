@@ -129,7 +129,7 @@ class LoginForm extends Component {
           ))}
         </AutoComplete>
       },
-      { label: '验证码', name: 'captcha', visible: !isLogin, rules: [{required: true, message: '请输入验证码'}], input:
+      { label: '验证码', name: 'captcha', visible: true, rules: [{required: true, message: '请输入验证码'}], input:
         <Row>
           <Col span={12}>
             <Input placeholder="请输入验证码"/>

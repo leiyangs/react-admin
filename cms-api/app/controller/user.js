@@ -11,15 +11,20 @@ class UserController extends BaseController {
   async signup() {
     const { ctx, app } = this;
     const body = ctx.request.body; // 注册传入的数据
-    let { repassword, address, agreement, prefix, ...user } = body;
+    let { repassword, address, agreement, prefix, ...user, captcha } = body;
     if (repassword !== user.password) {
-      this.error('密码与确认密码不一致');
+      return this.error('密码与确认密码不一致');
     }
     if (!agreement) {
-      this.error('请同意协议后再试');
+      return this.error('请同意协议后再试');
     }
+    if(!captcha || !ctx.session.captcha || captcha !== ctx.session.captcha ) {
+      return this.error('验证码不正确');
+    }
+    // 处理地址
     address = address.join('-');
     user.address = address;
+    // 处理电话 区号+电话
     user.phone = `${prefix}-${user.phone}`;
     const result = await app.mysql.insert('user', user);
     if (result.affectedRows > 0) {
@@ -30,8 +35,11 @@ class UserController extends BaseController {
   }
   async signin() {
     const { ctx, app, config } = this;
-    const body = ctx.request.body;
-    const result = await app.mysql.get('user', body); // egg中mysql的方法，查不到会返回null，查到返回本条数据
+    const { password, username, captcha } = ctx.request.body;
+    if(!captcha || !ctx.session.captcha || captcha !== ctx.session.captcha ) {
+      return this.error('验证码不正确');
+    }
+    const result = await app.mysql.get('user', { password, username }); // egg中mysql的方法，查不到会返回null，查到返回本条数据
     if (result) {
       // mysql返回的result不是纯对象，jwt sign签名只能使用纯对象
       const user = JSON.parse(JSON.stringify(result));
