@@ -12,7 +12,7 @@ class UserController extends BaseController {
     const { ctx, app } = this;
     const body = ctx.request.body; // 注册传入的数据
     let { repassword, address, agreement, prefix, captcha, ...user } = body;
-    console.log(captcha, ctx.session.captcha)
+    console.log(captcha, ctx.session.captcha);
     if (repassword !== user.password) {
       return this.error('密码与确认密码不一致');
     }
@@ -37,13 +37,17 @@ class UserController extends BaseController {
   async signin() {
     const { ctx, app, config } = this;
     const { password, username, captcha } = ctx.request.body;
-    console.log(captcha, ctx.session.captcha)
+    console.log(captcha, ctx.session.captcha);
     // if (!captcha || !ctx.session.captcha || captcha.toLowerCase() !== ctx.session.captcha.toLowerCase()) {
     //   return this.error('验证码不正确');
     // }
+    // const result = await app.mysql.select('user', { where: { username, password },
+    //   limit: 1,
+    //   offset: 0,
+    // });
     const result = await app.mysql.get('user', { password, username }); // egg中mysql的方法，查不到会返回null，查到返回本条数据
-    console.log(result)
     if (result) {
+      console.log(result);
       // mysql返回的result不是纯对象，jwt sign签名只能使用纯对象
       const user = JSON.parse(JSON.stringify(result));
       const token = sign(user, config.JWT_SECRET); // 生成token，加盐

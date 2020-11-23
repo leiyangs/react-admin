@@ -37,6 +37,16 @@ export default {
       }else {
         message.error(result.data);
       }
+    },
+    *loadUser({put}) {
+      const token=localStorage.getItem('token');
+      if (token) {
+        debugger
+        const user = decode(token); // jwt中的decode
+        yield put({type:'save',payload:{user}});
+      } else {
+        yield put(routerRedux.push('/login'));
+      }
     }
   }
 }

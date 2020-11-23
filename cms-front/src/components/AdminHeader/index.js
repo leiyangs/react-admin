@@ -6,15 +6,17 @@ import { connect } from 'dva';
 const { Header } = Layout;
 
 class AdminHeader extends Component {
-  componentDidMount() {
-    console.log(this.props)
+  componentWillMount() {
+    this.props.dispatch({type:'login/loadUser'});
   }
   render() {
+    console.log(this.props)
+    const userInfo = this.props.user;
     return (
       <Header className={styles.header}>
         <h1>CMS辅助系统</h1>
         <div>
-          <span>欢迎 {this.props.user.username}</span>
+          <span>欢迎 {userInfo&&userInfo.username}</span>
         </div>
       </Header>
     )
