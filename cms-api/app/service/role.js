@@ -41,7 +41,7 @@ class RoleService extends BaseService {
     // [{"id": 1,"name": "平台管理","parent_id": 0},{"id": 2,"name": "角色管理","parent_id": 1},{"id": 3,"name": "用户管理","parent_id": 1},{"id": 4,"name": "添加角色","parent_id": 2},{"id": 5,"name": "添加用户","parent_id": 3}]
     const list = await this.app.mysql.select('resource');
     const rootMenus = [];
-    const resourceMap = [];
+    const resourceMap = {};
     list.forEach(item => {
       item.children = [];
       resourceMap[item.id] = item;
