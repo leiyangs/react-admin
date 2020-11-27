@@ -37,19 +37,39 @@ class UserController extends BaseController {
   async signin() {
     const { ctx, app, config } = this;
     const { password, username, captcha } = ctx.request.body;
-    console.log(captcha, ctx.session.captcha);
+    console.log(captcha, ctx.session.captcha) ;
+    // 校验验证码是否正确
     // if (!captcha || !ctx.session.captcha || captcha.toLowerCase() !== ctx.session.captcha.toLowerCase()) {
     //   return this.error('验证码不正确');
     // }
+
+    // mysql.select写法
     // const result = await app.mysql.select('user', { where: { username, password },
     //   limit: 1,
     //   offset: 0,
     // });
+
     const result = await app.mysql.get('user', { password, username }); // egg中mysql的方法，查不到会返回null，查到返回本条数据
     if (result) {
-      console.log(result);
+      // 获取到用户信息后，把用户权限一并返回
+      const resources = await app.mysql.query(`SELECT resource.* FROM role_user INNER JOIN role_resource ON role_user.role_id = role_resource.role_id INNER JOIN resource ON role_resource.resource_id = resource.id WHERE role_user.user_id = ?`, [result.id]);
+      // 将权限改为树形结构
+      let menus = [];
+      let resourceMap = {};
+      resources.forEach(resource => {
+        resource.children = [];
+        resourceMap[resource.id] = resource;
+        if(resource.parent_id == 0) {
+          menus.push(resource);
+        }else {
+          resourceMap[resource.parent_id] && resourceMap[resource.parent_id].children.push(resource);
+        }
+      })
+
       // mysql返回的result不是纯对象，jwt sign签名只能使用纯对象
       const user = JSON.parse(JSON.stringify(result));
+      user.menus = menus;
+      console.log(user);
       const token = sign(user, config.JWT_SECRET); // 生成token，加盐
       this.success(token);
     } else {
