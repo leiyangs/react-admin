@@ -9,16 +9,16 @@ export default {
     isLogin: true,
     user: null, // 当前登录用户的信息
   },
-  reducers: {
+  reducers: { // 用来保存更新state值 effects中的put方法调用这里的方法
     save(state, action) {
       return {...state, ...action.payload}; // action.payload是组件中dispatch过来的isLogin，覆盖state中的isLogin
     }
   },
-  effects: { // saga generator
+  effects: { // saga generator 用来做异步处理的
     *signup({payload}, {put, call}) {
-      let result = yield call(service.signup, payload);
+      let result = yield call(service.signup, payload); // param参数传给接口
       if(result.code === 0) {
-        yield put({type: 'save', payload: {isLogin: true}})
+        yield put({type: 'save', payload: {isLogin: true}}) // 调用reducers 改变state中的值
         message.success(result.data);
       }else {
         message.error(result.data);
@@ -38,8 +38,7 @@ export default {
         message.error(result.data);
       }
     },
-    *loadUser({put}) {
-      debugger
+    *loadUser({payload}, {call, put}) {
       const token=localStorage.getItem('token');
       if (token) {
         debugger

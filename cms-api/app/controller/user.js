@@ -70,7 +70,7 @@ class UserController extends BaseController {
       const user = JSON.parse(JSON.stringify(result));
       user.menus = menus;
       console.log(user);
-      const token = sign(user, config.JWT_SECRET); // 生成token，加盐
+      const token = sign(user, config.JWT_SECRET); // 生成token，加盐 config.default.js
       this.success(token);
     } else {
       this.error('登录失败');
