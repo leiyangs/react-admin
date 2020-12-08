@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 import AdminHeader from '@/components/AdminHeader';
 import MenuList from '@/components/MenuList';
-const { Footer, Sider, Content, Header } = Layout;
+const { Footer, Sider, Content } = Layout;
 
 export default class Admin extends Component {
   render() {
