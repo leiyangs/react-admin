@@ -10,7 +10,6 @@ class AdminHeader extends Component {
     this.props.dispatch({type:'admin/loadUser'});
   }
   render() {
-    // console.log(this.props)
     const userInfo = this.props.user;
     return (
       <Header className={styles.header}>
