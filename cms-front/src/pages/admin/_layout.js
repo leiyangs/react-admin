@@ -10,9 +10,9 @@ export default class Admin extends Component {
       <Layout>
         <AdminHeader/>
         <Layout>
-        <Sider>
-          <MenuList/>
-        </Sider>
+          <Sider style={{height: 'calc(100vh - 134px)'}}>
+            <MenuList/>
+          </Sider>
           <Content>
             Content
           </Content>
