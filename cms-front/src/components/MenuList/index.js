@@ -5,6 +5,9 @@ import { connect } from 'dva';
 
 const SubMenu = Menu.SubMenu;
 class MenuList extends React.Component {
+  state = {
+    collapsed: false,
+  }
   componentDidMount() {
     console.log(this.props)
 
@@ -15,9 +18,24 @@ class MenuList extends React.Component {
       return null;
     }
     return (
-      <div>
-        11111
-      </div>
+      <Menu
+      defaultSelectedKeys={['/admin/user']}
+      defaultOpenKeys={['/admin']}
+      mode="inline"
+      theme="dark"
+      inlineCollapsed={this.state.collapsed}>
+        <SubMenu key="/admin" title="admin">
+          <Menu.Item key="/admin/user">
+            user
+          </Menu.Item>
+          <Menu.Item key="/admin/resource">
+          resource
+          </Menu.Item>
+          <Menu.Item key="/admin/role">
+          role
+          </Menu.Item>
+        </SubMenu>
+      </Menu>
     )
   }
 }

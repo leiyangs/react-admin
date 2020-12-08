@@ -12,7 +12,7 @@ class AdminHeader extends Component {
   render() {
     const userInfo = this.props.user;
     return (
-      <Header className={styles.header}>
+      <Header className={[styles.header]}>
         <h1>CMS辅助系统</h1>
         <div>
           <span>欢迎 {userInfo&&userInfo.username}</span>
