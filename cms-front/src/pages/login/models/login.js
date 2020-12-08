@@ -4,7 +4,7 @@ import { decode } from 'jsonwebtoken';
 import { routerRedux } from 'dva';
 
 export default {
-  namespase: 'login',
+  namespace: 'login',
   state: {
     isLogin: true,
     user: null, // 当前登录用户的信息
@@ -41,7 +41,6 @@ export default {
     *loadUser({payload}, {call, put}) {
       const token=localStorage.getItem('token');
       if (token) {
-        debugger
         const user = decode(token); // jwt中的decode
         yield put({type:'save',payload:{user}});
       } else {

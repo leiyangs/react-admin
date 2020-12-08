@@ -7,20 +7,14 @@ const { Header } = Layout;
 
 class AdminHeader extends Component {
   componentWillMount() {
-    debugger
-    this.props.dispatch({type:'login/loadUser'});
-  }
-  myclick = () => {
-    debugger
-    this.props.dispatch({type:'login/loadUser'});
-    console.log(this.props)
+    this.props.dispatch({type:'admin/loadUser'});
   }
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     const userInfo = this.props.user;
     return (
       <Header className={styles.header}>
-        <h1 onClick={this.myclick}>CMS辅助系统</h1>
+        <h1>CMS辅助系统</h1>
         <div>
           <span>欢迎 {userInfo&&userInfo.username}</span>
         </div>
@@ -30,5 +24,5 @@ class AdminHeader extends Component {
 }
 
 export default connect(
-  state => state.login
+  state => state.admin
 )(AdminHeader);

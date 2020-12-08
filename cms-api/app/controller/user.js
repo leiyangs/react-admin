@@ -69,8 +69,7 @@ class UserController extends BaseController {
       // mysql返回的result不是纯对象，jwt sign签名只能使用纯对象
       const user = JSON.parse(JSON.stringify(result));
       user.menus = menus;
-      console.log(user);
-      const token = sign(user, config.JWT_SECRET); // 生成token，加盐 config.default.js
+      const token = sign({username: user.username, menus: user.menus}, config.JWT_SECRET); // 生成token，加盐 config.default.js
       this.success(token);
     } else {
       this.error('登录失败');
