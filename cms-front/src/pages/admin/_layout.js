@@ -5,7 +5,16 @@ import MenuList from '@/components/MenuList';
 const { Footer, Sider, Content } = Layout;
 
 export default class Admin extends Component {
+  state = {
+    collapsed: false,
+  };
+  toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
   render() {
+    const { collapsed } = this.state;
     return (
       <Layout>
         <AdminHeader/>
@@ -15,7 +24,12 @@ export default class Admin extends Component {
             height: 'calc(100vh - 134px)',
             position: 'fixed',
             left: 0,
-          }}>
+          }}
+            trigger={null}
+            collapsible
+            collapsed={collapsed} 
+            onCollapse={this.toggleCollapsed}
+          >
             <MenuList/>
           </Sider>
           <Content style={{marginLeft: "200px", position: 'relative'}}>
