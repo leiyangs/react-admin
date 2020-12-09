@@ -22,8 +22,6 @@ export default class Admin extends Component {
           <Sider style={{
             overflow: 'auto',
             height: 'calc(100vh - 134px)',
-            position: 'fixed',
-            left: 0,
           }}
             trigger={null}
             collapsible
@@ -32,11 +30,11 @@ export default class Admin extends Component {
           >
             <MenuList/>
           </Sider>
-          <Content style={{marginLeft: "200px", position: 'relative'}}>
-            Content
+          <Content>
+            {this.props.children}
           </Content>
         </Layout>
-        <Footer style={{width: '100%', textAlign: "center", position: 'fixed', left: 0, bottom: 0}}>
+        <Footer style={{width: '100%', textAlign: "center"}}>
           Bob ©2020
         </Footer>
       </Layout>
