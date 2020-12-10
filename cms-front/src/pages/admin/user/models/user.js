@@ -26,9 +26,9 @@ export default {
   },
   subscriptions: {
     setup({dispatch, history}) {
-      history.listen(({pathname, query}) => { // query === pageNum=1
+      history.listen(({pathname, query}) => { // query是url后的参数
         if(pathname === '/admin/user') {
-          dispatch({type: 'getUserList', payload: {pageNum: query.pageNum, pageSize: PAGE_SIZE}}); // 在model内dispatch不用加前缀
+          dispatch({type: 'getUserList', payload: {pageNum: 1, pageSize: PAGE_SIZE}}); // 在model内dispatch不用加前缀
         }
       })
     }
