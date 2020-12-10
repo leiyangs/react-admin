@@ -30,7 +30,7 @@ export default class Admin extends Component {
           >
             <MenuList/>
           </Sider>
-          <Content>
+          <Content style={{padding: '20px'}}>
             {this.props.children}
           </Content>
         </Layout>

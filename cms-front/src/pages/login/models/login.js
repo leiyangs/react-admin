@@ -16,7 +16,7 @@ export default {
   },
   effects: { // saga generator 用来做异步处理的
     *signup({payload}, {put, call}) {
-      let result = yield call(service.signup, payload); // param参数传给接口
+      const result = yield call(service.signup, payload); // param参数传给接口
       if(result.code === 0) {
         yield put({type: 'save', payload: {isLogin: true}}) // 调用reducers 改变state中的值
         message.success(result.data);
@@ -25,7 +25,7 @@ export default {
       }
     },
     *signin({payload}, {put, call}) {
-      let result = yield call(service.signin, payload);
+      const result = yield call(service.signin, payload);
       if(result.code === 0) {
         // 把返回的token存到localstorage中，方便重新获取
         const token = result.data;
