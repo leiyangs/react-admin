@@ -52,7 +52,7 @@ class UserController extends BaseController {
     const result = await app.mysql.get('user', { password, username }); // egg中mysql的方法，查不到会返回null，查到返回本条数据
     if (result) {
       // 获取到用户信息后，把用户菜单权限一并返回
-      const resources = await app.mysql.query('SELECT resource.* FROM role_user INNER JOIN role_resource ON role_user.role_id = role_resource.role_id INNER JOIN resource ON role_resource.resource_id = resource.id WHERE role_user.user_id = ?', [ result.id ]);
+      const resources = await app.mysql.query('SELECT resource* FROM role_user INNER JOIN role_resource ON role_user.role_id = role_resource.role_id INNER JOIN resource ON role_resource.resource_id = resource.id WHERE role_user.user_id = ?', [ result.id ]);
       // 将菜单权限改为树形结构
       const menus = [];
       const resourceMap = {};
