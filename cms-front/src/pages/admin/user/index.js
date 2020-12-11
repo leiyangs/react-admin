@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
+import styled from 'styled-components';
 import { Table, Form } from 'antd';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
 
@@ -11,25 +12,26 @@ class User extends React.Component {
   state = {
     loading: false
   }
-  
-  onPageNumChange = async (pageNum, pageSize) => {
+  getList = async (pageNum, pageSize) => {
     this.setState({ loading: true });
     await this.props.dispatch({type:'user/getUserList', payload: {pageNum, pageSize}});
     this.setState({ loading: false });
+  }
+  onPageNumChange = (pageNum, pageSize) => {
+    this.getList(pageNum, pageSize);
     // this.props.dispatch(routerRedux.push(`/admin/user?pageNum=${pageNum}`))
   }
   onShowSizeChange = (pageNum, pageSize) => {
-    // this.props.dispatch({type:'user/getUserList', payload: {pageNum, pageSize}});
+    console.log(pageNum, pageSize)
   }
   render() {
     const { loading } = this.state;
-    const { list, total, pageNum } = this.props;
+    const { list, total } = this.props;
     const pagination = {
-      current: pageNum,
       total,
-      pageSize: PAGE_SIZE,
-      defaultPageSize: 3,
-      defaultCurrent: 1,
+      defaultPageSize: PAGE_SIZE, // 默认每页条数
+      defaultCurrent: 1, // 默认当前页数
+      pageSizeOptions: [3, 5, 10, 20, 50, 100], // 指定每页多少条
       showSizeChanger: true, // 每页显示几条快捷
       showQuickJumper: true, // 快速跳转到哪页
       showTotal: (total, range) => {
@@ -76,7 +78,15 @@ class User extends React.Component {
     ];
     return (
       // 使用 rowKey 来指定 dataSource 的主键。若没有指定，控制台会出现报错的提示 `Each child in a list should have a unique "key" prop`
-      <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
+      <FormWrapper>
+        <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} style={{height: 'calc(100vh - 174px)'}} />
+      </FormWrapper>
     )
   }
 }
+
+const FormWrapper = styled.div`
+  .ant-table {
+    height: calc(100vh - 220px);
+  }
+`
