@@ -79,7 +79,7 @@ class User extends React.Component {
     return (
       // 使用 rowKey 来指定 dataSource 的主键。若没有指定，控制台会出现报错的提示 `Each child in a list should have a unique "key" prop`
       <FormWrapper>
-        <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} style={{height: 'calc(100vh - 174px)'}} />
+        <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
       </FormWrapper>
     )
   }
@@ -87,6 +87,6 @@ class User extends React.Component {
 
 const FormWrapper = styled.div`
   .ant-table {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 250px);
   }
 `
