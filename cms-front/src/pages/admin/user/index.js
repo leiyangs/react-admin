@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import styled from 'styled-components';
-import { Table, Form } from 'antd';
+import { Table } from 'antd';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
-
-const FormItem = Form.Item;
 
 export default
 @connect(state => state.user) // 装饰器 和connect()()一样，把class传入
@@ -87,6 +85,10 @@ class User extends React.Component {
 
 const FormWrapper = styled.div`
   .ant-table {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 250px) !important;
+    overflow-y: scroll;
+  }
+  .ant-empty-normal {
+    margin: calc(100vh - 250px) !important;
   }
 `

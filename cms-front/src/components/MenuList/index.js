@@ -17,6 +17,7 @@ class MenuList extends React.Component {
           <SubMenu key={menu.path} title={
             <span>
               {/* <MyIcon type={menu.icon} /> */}
+              {/* 数据库中menu.icon要用antd中有的 */}
               {
                 React.createElement(MyIcon[menu.icon], {style: {fontSize: '16px'}})
               }
