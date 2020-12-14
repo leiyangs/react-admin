@@ -17,7 +17,8 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: { webpackChunkName: true },
-      title: 'cms辅助系统',
+      title: 'REACT ADMIN',
+      // links: [{ rel: 'icon', href: './favicon.svg' }],
       dll: true,
       locale: {
         enable: true,

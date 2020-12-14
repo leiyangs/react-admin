@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
+import { parseTime } from '@/utils';
 import styled from 'styled-components';
-import { Table, Card } from 'antd';
+import { Table, Form, Card } from 'antd';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
 
 export default
@@ -49,6 +50,9 @@ class User extends React.Component {
         title: '生日',
         dataIndex: 'birthday',
         key: 'birthday',
+        render: birth => {
+          return parseTime(birth, '{y}-{m}-{d}');
+        }
       },
       {
         title: '电话',
@@ -78,6 +82,9 @@ class User extends React.Component {
       // 使用 rowKey 来指定 dataSource 的主键。若没有指定，控制台会出现报错的提示 `Each child in a list should have a unique "key" prop`
       <FormWrapper>
         <Card>
+          <Form>
+            
+          </Form>
           <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
         </Card>
       </FormWrapper>

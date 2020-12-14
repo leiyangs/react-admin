@@ -4,7 +4,6 @@ import * as MyIcon from '@ant-design/icons';
 import { Link } from 'umi';
 import { connect } from 'dva';
 import styles from './index.scss';
-import { CalculatorFilled } from '@ant-design/icons';
 const logo = require('../../assets/images/logo.svg');
 
 // antd 提供的方法方便根据type使用Icon

@@ -33,9 +33,9 @@ export default class Admin extends Component {
             padding: '24px 0',
           }}/>
         </Sider>
-        <Content style={{paddingTop: '64px',height: 'calc(100vh - 100px)', overflowY: 'scroll'}}>
+        <Content style={{paddingTop: '64px',height: 'calc(100vh - 80px)', overflowY: 'scroll'}}>
           <AdminHeader/>
-          <main style={{padding: '20px'}}>
+          <main style={{minHeihgt: '100%', padding: '20px'}}>
             {this.props.children}
           </main>
           <Footer style={{
@@ -46,7 +46,7 @@ export default class Admin extends Component {
             bottom: 0,
             right: 0
           }}>
-            Bob ©2020
+            React Admin ©2020 Bob <a href="https://github.com/leiyangs/react-admin" title="Github项目地址" target="_blank">Github地址</a>
           </Footer>
         </Content>
       </Layout>

@@ -163,8 +163,7 @@ const FormWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  // height: calc(100vh - 70px);
-  min-height: 100%;
+  background: #f0f2f5;
   margin: 100px auto;
   h3 {
     text-align: center;

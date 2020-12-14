@@ -10,7 +10,7 @@ class AdminHeader extends Component {
   state = {
     collapsed: false,
   };
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch({type:'admin/loadUser'});
   }
   toggleCollapsed = () => {
