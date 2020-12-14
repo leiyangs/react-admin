@@ -30,12 +30,14 @@ export default {
         // 把返回的token存到localstorage中，方便重新获取
         const token = result.data;
         localStorage.setItem('token', token);
+        localStorage.setItem('isLogin', true);
         const user = decode(token); // decode可以解密
         yield put({type: 'save', payload: {user}}); // 将当前登录用户信息放到仓库中去
         // 如果登录成功跳转到首页
         yield put(routerRedux.push('/admin'));
       }else {
         message.error(result.data);
+        localStorage.setItem('isLogin', false);
       }
     },
     *loadUser({payload}, {call, put}) {
