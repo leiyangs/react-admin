@@ -57,7 +57,7 @@ class MenuList extends React.Component {
       <div style={{width: 200, height: '100%', overflow: 'hidden'}}>
         {/* <MyIcon type="icon-example" style={ {fontSize: '16px', color: '#08c'} }/> */}
         <div className={[styles.logo_wrapper]}>
-          <img src={logo} style={{width: '36px', marginRight: '8px'}} alt="logo" />
+          <img src={logo} style={{width: '30px', marginRight: '8px'}} alt="logo" />
           <h1>REACT ADMIN</h1>
         </div>
         <div className={[styles.sidebar_container]}>
