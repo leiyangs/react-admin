@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'dva';
 import { parseTime } from '@/utils';
 import styled from 'styled-components';
-import { Table, Form, Card } from 'antd';
+import { Table, Form, Card, Button } from 'antd';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
+import UserModal from './components/UserModal';
 
 export default
 @connect(state => state.user) // 装饰器 和connect()()一样，把class传入
 class User extends React.Component {
   state = {
-    loading: false
+    loading: false,
   }
   getList = async (pageNum, pageSize) => {
     this.setState({ loading: true });
@@ -23,9 +24,18 @@ class User extends React.Component {
   onShowSizeChange = (pageNum, pageSize) => {
     console.log(pageNum, pageSize)
   }
+  onAdd = () => {
+    this.props.dispatch({type: 'user/save', payload: {visible: true}});
+  }
+  onOk = () => {
+
+  }
+  onCancel = () => {
+
+  }
   render() {
     const { loading } = this.state;
-    const { list, total } = this.props;
+    const { list, total, isCreate, visible, record } = this.props;
     const pagination = {
       total,
       defaultPageSize: PAGE_SIZE, // 默认每页条数
@@ -83,10 +93,20 @@ class User extends React.Component {
       <FormWrapper>
         <Card>
           <Form>
-            
+            <Form.Item>
+              <Button type="primary" onClick={this.onAdd}>新增</Button>
+            </Form.Item>
           </Form>
           <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
         </Card>
+        <UserModal
+          wrappedComponentRef = {inst => this.form = inst}
+          isCreate={isCreate}
+          visible={visible}
+          onOk={this.onOk}
+          onCancel={this.onCancel}
+          record={record}
+        />
       </FormWrapper>
     )
   }

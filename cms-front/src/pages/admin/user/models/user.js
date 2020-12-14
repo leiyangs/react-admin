@@ -8,6 +8,9 @@ export default {
     list: [],
     total: 0,
     pageNum: 1,
+    isCreate: true,
+    visible: false,
+    record: {}, // 当前编辑的行
   },
   reducers: {
     save(state,action) {

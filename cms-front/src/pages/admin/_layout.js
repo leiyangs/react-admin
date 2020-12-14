@@ -46,7 +46,7 @@ export default class Admin extends Component {
             bottom: 0,
             right: 0
           }}>
-            React Admin ©2020 Bob <a href="https://github.com/leiyangs/react-admin" title="Github项目地址" target="_blank">Github地址</a>
+            React Admin ©2020 Bob <a href="https://github.com/leiyangs/react-admin" title="Github项目地址" target="_blank" rel="noopener noreferrer">Github地址</a>
           </Footer>
         </Content>
       </Layout>
