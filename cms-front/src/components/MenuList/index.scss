@@ -1,5 +1,4 @@
 .logo_wrapper {
-  color: #1890ff;
   height: 64px;
   line-height: 64px;
   display: flex;
@@ -7,7 +6,17 @@
   box-shadow: 0 1px 9px -3px rgba(0,0,0,.2);
 }
 .logo_wrapper h1 {
-  color: #1890ff;
+  vertical-align: text-bottom;
+  font-size: 16px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: 700;
+  color: rgb(24, 144, 255);
+  white-space: nowrap;
+  margin-bottom: 0px;
+  background-image: -webkit-gradient(linear, 37.2198% 34.5325%, 36.4257% 93.1782%, from(rgb(41, 205, 255)), to(rgb(10, 96, 255)), color-stop(0.37, rgb(20, 142, 255)));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .sidebar_container {
   height: 100%;
