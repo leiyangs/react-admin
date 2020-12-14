@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import styled from 'styled-components';
-import { Table } from 'antd';
+import { Table, Card } from 'antd';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
 
 export default
@@ -77,7 +77,9 @@ class User extends React.Component {
     return (
       // 使用 rowKey 来指定 dataSource 的主键。若没有指定，控制台会出现报错的提示 `Each child in a list should have a unique "key" prop`
       <FormWrapper>
-        <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
+        <Card>
+          <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
+        </Card>
       </FormWrapper>
     )
   }
@@ -85,8 +87,8 @@ class User extends React.Component {
 
 const FormWrapper = styled.div`
   .ant-table {
-    height: calc(100vh - 250px) !important;
-    overflow-y: scroll;
+    // height: calc(100vh - 250px) !important;
+    // overflow-y: scroll;
   }
   .ant-empty-normal {
     margin: calc(100vh - 250px) !important;

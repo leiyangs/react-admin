@@ -16,27 +16,39 @@ export default class Admin extends Component {
   render() {
     const { collapsed } = this.state;
     return (
-      <Layout>
-        <AdminHeader/>
-        <Layout>
-          <Sider style={{
-            overflow: 'auto',
+      <Layout style={{display: 'flex', height: '100%'}}>
+        <Sider style={{
+          flex: '0 0 256px',
+          width: '256px',
+        }}
+          trigger={null}
+          collapsible
+          collapsed={collapsed} 
+          onCollapse={this.toggleCollapsed}
+        >
+          <MenuList style={{
+            overflowX: 'hidden',
             height: 'calc(100vh - 134px)',
-          }}
-            trigger={null}
-            collapsible
-            collapsed={collapsed} 
-            onCollapse={this.toggleCollapsed}
-          >
-            <MenuList/>
-          </Sider>
-          <Content style={{padding: '20px', background: '#fff'}}>
+            flex: '0 0 256px',
+            padding: '24px 0',
+          }}/>
+        </Sider>
+        <Content style={{paddingTop: '64px',height: 'calc(100vh - 100px)', overflowY: 'scroll'}}>
+          <AdminHeader/>
+          <main style={{padding: '20px'}}>
             {this.props.children}
-          </Content>
-        </Layout>
-        <Footer style={{width: '100%', textAlign: "center"}}>
-          Bob ©2020
-        </Footer>
+          </main>
+          <Footer style={{
+            textAlign: 'center',
+            background: '#fff',
+            width: 'calc(100% - 200px)',
+            position: 'fixed',
+            bottom: 0,
+            right: 0
+          }}>
+            Bob ©2020
+          </Footer>
+        </Content>
       </Layout>
     )
   }

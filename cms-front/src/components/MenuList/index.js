@@ -3,6 +3,9 @@ import { Menu } from 'antd';
 import * as MyIcon from '@ant-design/icons';
 import { Link } from 'umi';
 import { connect } from 'dva';
+import styles from './index.scss';
+import { CalculatorFilled } from '@ant-design/icons';
+const logo = require('../../assets/images/logo.svg');
 
 // antd 提供的方法方便根据type使用Icon
 // const MyIcon = createFromIconfontCN({
@@ -52,28 +55,34 @@ class MenuList extends React.Component {
     openPath.pop();
     openPath = openPath.join('/');
     return (
-      <div style={{width: 200}}>
+      <div style={{width: 200, height: '100%', overflow: 'hidden'}}>
         {/* <MyIcon type="icon-example" style={ {fontSize: '16px', color: '#08c'} }/> */}
-        <Menu
-          defaultSelectedKeys={[path]}
-          defaultOpenKeys={[openPath]}
-          mode="inline"
-          theme="dark"
-        >
-            {/* <SubMenu key="/admin" title="admin">
-              <Menu.Item key="/admin/user">
-                user
-              </Menu.Item>
-              <Menu.Item key="/admin/resource">
-                resource
-              </Menu.Item>
-              <Menu.Item key="/admin/role">
-                role
-              </Menu.Item>
-            </SubMenu> */}
-            
-          {this.renderMenuItems(user.menus)}
-        </Menu>
+        <div className={[styles.logo_wrapper]}>
+          <img src={logo} style={{width: '36px', marginRight: '8px'}} alt="logo" />
+          <h1>REACT ADMIN</h1>
+        </div>
+        <div className={[styles.sidebar_container]}>
+          <Menu
+            defaultSelectedKeys={[path]}
+            defaultOpenKeys={[openPath]}
+            mode="inline"
+            theme="dark"
+          >
+              {/* <SubMenu key="/admin" title="admin">
+                <Menu.Item key="/admin/user">
+                  user
+                </Menu.Item>
+                <Menu.Item key="/admin/resource">
+                  resource
+                </Menu.Item>
+                <Menu.Item key="/admin/role">
+                  role
+                </Menu.Item>
+              </SubMenu> */}
+              
+            {this.renderMenuItems(user.menus)}
+          </Menu>
+        </div>
       </div>
     )
   }

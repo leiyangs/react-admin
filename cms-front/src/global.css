@@ -1,11 +1,25 @@
-html, body {
+html, body, #root {
   height: 100%;
-}
-
-#root {
-  min-height: 100%;
 }
 
 body {
   margin: 0;
+}
+
+::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 8px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(215, 215, 215, 1);
+}
+
+::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  border-radius: 10px;
+  background: #ededed00;
 }

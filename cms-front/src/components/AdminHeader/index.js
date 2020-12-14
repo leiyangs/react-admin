@@ -1,19 +1,33 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
+import { Layout, Button } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import styles from './index.scss';
 import { connect } from 'dva';
 
 const { Header } = Layout;
 
 class AdminHeader extends Component {
+  state = {
+    collapsed: false,
+  };
   componentWillMount() {
     this.props.dispatch({type:'admin/loadUser'});
   }
+  toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
+  
   render() {
     const userInfo = this.props.user;
     return (
       <Header className={[styles.header]}>
-        <h1>CMS辅助系统</h1>
+        <div>
+          <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
+            {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+          </Button>
+        </div>
         <div>
           <span>欢迎 {userInfo&&userInfo.username}</span>
         </div>

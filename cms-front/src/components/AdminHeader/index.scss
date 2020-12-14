@@ -1,10 +1,17 @@
 .header {
+  width: calc(100% - 200px);
+  transition: width .2s;
   display: flex;
+  padding: 0 20px;
   justify-content: space-between;
   align-items:center;
-  color: #fff;
-  background-color: #044B8E;
+  color: #000;
+  background-color: #FFF;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 29;
 }
 .header h1 {
-  color: #fff;
+  color: #000;
 }
