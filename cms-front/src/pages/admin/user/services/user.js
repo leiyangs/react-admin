@@ -11,3 +11,10 @@ export function createUser(data) {
     body: JSON.stringify(data)
   })
 }
+
+export function updateUser(data) {
+  return request(`/api/user/${data.id}`, {
+    method: 'put',
+    body: JSON.stringify(data)
+  })
+}

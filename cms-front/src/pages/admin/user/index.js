@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { connect } from 'dva';
 import { parseTime } from '@/utils';
 import styled from 'styled-components';
@@ -39,7 +39,7 @@ class User extends React.Component {
   }
   getList = async (pageNum, pageSize) => {
     this.setState({ loading: true });
-    await this.props.dispatch({type:'user/getUserList', payload: {pageNum, pageSize}});
+    await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize}});
     this.setState({ loading: false });
   }
   onPageNumChange = (pageNum, pageSize) => {
@@ -49,7 +49,10 @@ class User extends React.Component {
     console.log(pageNum, pageSize)
   }
   onAdd = () => {
-    this.save({visible: true, isCreate: true});
+    this.save({visible: true, isCreate: true, record: {}});
+  }
+  onEdit = (record) => {
+    this.save({visible: true, isCreate: false, record});
   }
   render() {
     const { loading } = this.state;
@@ -106,6 +109,17 @@ class User extends React.Component {
         dataIndex: 'address',
         key: 'address',
       },
+      {
+        title: '操作',
+        key: 'operation',
+        render: (val, record) => {
+          return (
+            <Fragment>
+              <Button onClick={() => this.onEdit(record)}>编辑</Button>
+            </Fragment>
+          )
+        }
+      }
     ];
     return (
       // 使用 rowKey 来指定 dataSource 的主键。若没有指定，控制台会出现报错的提示 `Each child in a list should have a unique "key" prop`
@@ -115,7 +129,7 @@ class User extends React.Component {
             <Row gutter={24}>
               <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
                 <Form.Item name="name">
-                  <Search/>
+                  <Input/>
                 </Form.Item>
               </Col>
               <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>

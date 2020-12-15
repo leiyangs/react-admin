@@ -8,21 +8,20 @@ const UserModal = (props) => {
     labelCol: { span:4 },
     wrapperCol: { span: 20 }
   }
-  const { isCreate, visible } = props;
+  const { isCreate, visible, record } = props;
   const [form] = Form.useForm(); // useForm 是 React Hooks 的实现，只能用于函数组件
-  const save = (payload) => {
-    props.dispatch({type: 'user/save', payload});
-  }
   const onOk = () => {
     form.validateFields().then(async values=> {
-      await props.dispatch({type: 'user/createUser', payload: values});
-      save({visible: false});
+      await props.dispatch({
+        type: isCreate ? 'user/create' : 'user/update',
+        payload: values
+      });
     }).catch(errorInfo => {
       console.log(errorInfo)
     });
   }
   const onCancel = () => {
-    save({visible: false});
+    props.dispatch({type: 'user/hideModal'});
   }
   useEffect(() => { // 要手动调用resetFields清空form
     form.resetFields();
@@ -37,7 +36,8 @@ const UserModal = (props) => {
       destroyOnClose={false} // 关闭会销毁数据 与 <Form />配合使用时， Modal 关闭时销毁表单字段数据，需要设置 <Form preserve={false} /> 但不能设置 destroyOnClose 为 true
       maskClosable={false}
     >
-      <Form {...FormItemLayout} form={form} preserve={false} name="control-hooks">
+      <Form {...FormItemLayout} initialValues={record} form={form} preserve={false} name="control-hooks">
+        <Form.Item label="id" name="id" hidden></Form.Item>
         <Form.Item label="用户名" name="username" rules={[{ required: true, message: '请输入用户名' }]}>
           <Input placeholder="请输入用户名"/>
         </Form.Item>
