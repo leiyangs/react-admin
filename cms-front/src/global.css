@@ -6,6 +6,10 @@ body {
   margin: 0;
 }
 
+.margin-right {
+  margin-right: 16px;
+}
+
 ::-webkit-scrollbar {
   /*滚动条整体样式*/
   width: 8px;

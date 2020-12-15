@@ -2,9 +2,25 @@ import React from 'react';
 import { connect } from 'dva';
 import { parseTime } from '@/utils';
 import styled from 'styled-components';
-import { Table, Form, Card, Button } from 'antd';
+import { Table, Form, Card, Button, Row, Col, Input } from 'antd';
+import { SearchOutlined, SyncOutlined, PlusOutlined } from '@ant-design/icons';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
 import UserModal from './components/UserModal';
+
+const Search = Input;
+
+const ColProps = {
+  xs: 24,
+  sm: 12,
+  style: {
+    marginBottom: 6,
+  },
+}
+
+const TwoColProps = {
+  ...ColProps,
+  xl: 96,
+}
 
 export default
 @connect(state => state.user) // 装饰器 和connect()()一样，把class传入
@@ -14,6 +30,12 @@ class User extends React.Component {
   }
   save(payload) {
     this.props.dispatch({type: 'user/save', payload});
+  }
+  onFilter = () => {
+    this.getList(1, this.props.pageSize);
+  }
+  onResetFilter = () => {
+
   }
   getList = async (pageNum, pageSize) => {
     this.setState({ loading: true });
@@ -31,9 +53,10 @@ class User extends React.Component {
   }
   render() {
     const { loading } = this.state;
-    const { list, total, isCreate, visible, record } = this.props;
+    const { list, total, pageNum, isCreate, visible, record } = this.props;
     const pagination = {
       total,
+      current: pageNum,
       defaultPageSize: PAGE_SIZE, // 默认每页条数
       defaultCurrent: 1, // 默认当前页数
       pageSizeOptions: [3, 5, 10, 20, 50, 100], // 指定每页多少条
@@ -89,9 +112,38 @@ class User extends React.Component {
       <FormWrapper>
         <Card>
           <Form>
-            <Form.Item>
-              <Button type="primary" onClick={this.onAdd}>新增</Button>
-            </Form.Item>
+            <Row gutter={24}>
+              <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+                <Form.Item name="name">
+                  <Search/>
+                </Form.Item>
+              </Col>
+              <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+                <Form.Item name="name">
+                  <Search/>
+                </Form.Item>
+              </Col>
+              <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
+                <Form.Item name="name">
+                  <Search/>
+                </Form.Item>
+              </Col>
+              <Col {...TwoColProps}
+                xl={{ span: 10 }}
+                md={{ span: 24 }}
+                sm={{ span: 24 }}
+              >
+                <Row align="middle" justify="space-between">
+                  <div>
+                    <Button className="margin-right" type="primary" icon={<SearchOutlined/>} onClick={this.onFilter}>查询</Button>
+                    <Button className="margin-right" icon={<SyncOutlined />} onClick={this.onResetFilter}>重置</Button>
+                  </div>
+                  <div>
+                    <Button className="margin-right" icon={<PlusOutlined />} type="primary" onClick={this.onAdd}>新增</Button>
+                  </div>
+                </Row>
+              </Col>
+            </Row>
           </Form>
           <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
         </Card>

@@ -8,6 +8,7 @@ export default {
     list: [],
     total: 0,
     pageNum: 1,
+    pageSize: PAGE_SIZE,
     isCreate: true,
     visible: false,
     record: {}, // 当前编辑的行
@@ -21,8 +22,17 @@ export default {
     *getUserList({payload}, {put,call}) {
       const result = yield call(service.getUserList, payload);
       if(result.code === 0) {
-        yield put({type: 'save', payload: {list: result.data.list, total: result.data.total, pageNum: payload.pageNum}});
+        yield put({type: 'save', payload: {list: result.data.list, total: result.data.total, pageNum: payload.pageNum,  pageSize: payload.pageSize}});
       } else {
+        message.error(result.data);
+      }
+    },
+    *createUser({payload}, {put, call}) {
+      const result = yield call(service.createUser, payload);
+      if(result.code === 0) {
+        // yield put({})
+        message.success('新增成功');
+      }else {
         message.error(result.data);
       }
     }

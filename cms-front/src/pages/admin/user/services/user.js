@@ -4,3 +4,10 @@ import request from '@/utils/request';
 export function getUserList(data) {
   return request(`/api/user?pageNum=${data.pageNum}&pageSize=${data.pageSize}`);
 }
+
+export function createUser(data) {
+  return request('/api/user', {
+    method: 'post',
+    body: JSON.stringify(data)
+  })
+}

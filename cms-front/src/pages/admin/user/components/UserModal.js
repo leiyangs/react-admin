@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import { connect } from 'dva';
 import { Modal, Form, Input } from 'antd';
-import { MailOutlined } from '@ant-design/icons';
 
 // 使用函数组件，使用React Hooks特性
 const UserModal = (props) => {
@@ -15,8 +14,8 @@ const UserModal = (props) => {
     props.dispatch({type: 'user/save', payload});
   }
   const onOk = () => {
-    form.validateFields().then(values=> {
-      console.log(values)
+    form.validateFields().then(async values=> {
+      await props.dispatch({type: 'user/createUser', payload: values});
       save({visible: false});
     }).catch(errorInfo => {
       console.log(errorInfo)
@@ -36,6 +35,7 @@ const UserModal = (props) => {
       onCancel={onCancel}
       getContainer={false}
       destroyOnClose={false} // 关闭会销毁数据 与 <Form />配合使用时， Modal 关闭时销毁表单字段数据，需要设置 <Form preserve={false} /> 但不能设置 destroyOnClose 为 true
+      maskClosable={false}
     >
       <Form {...FormItemLayout} form={form} preserve={false} name="control-hooks">
         <Form.Item label="用户名" name="username" rules={[{ required: true, message: '请输入用户名' }]}>
@@ -45,7 +45,7 @@ const UserModal = (props) => {
           <Input.Password placeholder="请输入密码"/>
         </Form.Item>
         <Form.Item label="邮箱" name="email" rules={[{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入正确的邮箱格式' }]}>
-          <Input placeholder="请输入邮箱" prefix={<MailOutlined/>} />
+          <Input placeholder="请输入邮箱" />
         </Form.Item>
       </Form>
     </Modal>
