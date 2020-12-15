@@ -12,6 +12,9 @@ class User extends React.Component {
   state = {
     loading: false,
   }
+  save(payload) {
+    this.props.dispatch({type: 'user/save', payload});
+  }
   getList = async (pageNum, pageSize) => {
     this.setState({ loading: true });
     await this.props.dispatch({type:'user/getUserList', payload: {pageNum, pageSize}});
@@ -19,19 +22,12 @@ class User extends React.Component {
   }
   onPageNumChange = (pageNum, pageSize) => {
     this.getList(pageNum, pageSize);
-    // this.props.dispatch(routerRedux.push(`/admin/user?pageNum=${pageNum}`))
   }
   onShowSizeChange = (pageNum, pageSize) => {
     console.log(pageNum, pageSize)
   }
   onAdd = () => {
-    this.props.dispatch({type: 'user/save', payload: {visible: true}});
-  }
-  onOk = () => {
-
-  }
-  onCancel = () => {
-
+    this.save({visible: true, isCreate: true});
   }
   render() {
     const { loading } = this.state;
@@ -103,8 +99,6 @@ class User extends React.Component {
           wrappedComponentRef = {inst => this.form = inst}
           isCreate={isCreate}
           visible={visible}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
           record={record}
         />
       </FormWrapper>
