@@ -46,23 +46,6 @@ export default {
       }
     },
 
-    // *filterQuery({payload}, {put,call}) {
-    //   const result = yield call(service.getUserList, payload);
-    //   if(result.code === 0) {
-    //     yield put({
-    //       type: 'save', 
-    //       payload: {
-    //         list: result.data.list,
-    //         total: result.data.total,
-    //         pageNum: payload.pageNum || 1,
-    //         pageSize: payload.pageSize || PAGE_SIZE
-    //       }
-    //     });
-    //   } else {
-    //     message.error(result.data);
-    //   }
-    // }
-
     *create({payload}, {put, call, select}) { // 用来获取指定state中的值
       const result = yield call(service.createUser, payload);
       if(result.code === 0) {
