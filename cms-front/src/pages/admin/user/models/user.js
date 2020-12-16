@@ -58,7 +58,17 @@ export default {
         const pageSize = yield select(state => state.user.pageSize);
         yield put({type: 'query', payload: {pageNum, pageSize}});
         yield put({type: 'hideModal'});
-        message.success('新增成功');
+        message.success('编辑成功');
+      }else {
+        message.error(result.data);
+      }
+    },
+    *delete({payload}, {put, call, select}) {
+      const result = yield call(service.deleteUser, payload);
+      if(result.code === 0) {
+        const pageSize = yield select(state => state.user.pageSize);
+        yield put({type: 'query', payload: {pageNum: 1, pageSize}});
+        message.success('删除成功');
       }else {
         message.error(result.data);
       }

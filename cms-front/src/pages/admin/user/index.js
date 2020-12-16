@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import { connect } from 'dva';
 import { parseTime } from '@/utils';
 import styled from 'styled-components';
-import { Table, Form, Card, Button, Row, Col, Input } from 'antd';
+import { Table, Form, Card, Button, Row, Col, Input, Popconfirm } from 'antd';
 import { SearchOutlined, SyncOutlined, PlusOutlined } from '@ant-design/icons';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
 import UserModal from './components/UserModal';
@@ -53,6 +53,9 @@ class User extends React.Component {
   }
   onEdit = (record) => {
     this.save({visible: true, isCreate: false, record});
+  }
+  onDelete = (id) => {
+    this.props.dispatch({type: 'user/delete', payload: id})
   }
   render() {
     const { loading } = this.state;
@@ -115,7 +118,15 @@ class User extends React.Component {
         render: (val, record) => {
           return (
             <Fragment>
-              <Button onClick={() => this.onEdit(record)}>编辑</Button>
+              <Button className="margin-right" onClick={() => this.onEdit(record)}>编辑</Button>
+              <Popconfirm 
+                title="确定删除吗？"
+                okText="确定"
+                cancelText="取消"
+                onConfirm={()=>this.onDelete(record.id)}
+              >
+                <Button type="primary" danger>删除</Button>
+              </Popconfirm>
             </Fragment>
           )
         }

@@ -18,3 +18,9 @@ export function updateUser(data) {
     body: JSON.stringify(data)
   })
 }
+
+export function deleteUser(id) {
+  return request(`/api/user/${id}`, {
+    method: 'delete'
+  })
+}
