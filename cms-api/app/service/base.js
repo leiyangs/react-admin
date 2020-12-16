@@ -10,6 +10,7 @@ class BaseService extends Service {
     const affectedRows = result.affectedRows;
     return affectedRows;
   }
+
   async select(pageNum, pageSize, where) {
     // const list =  await this.app.mysql.query('SELECT * FROM user ORDER BY id asc limit 2,3');
     const list = await this.app.mysql.select(this.entity, {
@@ -22,14 +23,16 @@ class BaseService extends Service {
     const total = await this.app.mysql.count(this.entity, where); // 查询条件下的总条数
     return { list, total };
   }
+
   async update(entity) {
     const result = await this.app.mysql.update(this.entity, entity);
     const affectedRows = result.affectedRows;
     console.log(result);
     return affectedRows; // 如果在数据库影响行数大于0 那么成功，如果等于于0就是失败
   }
-  async destroy(id) {
-    const result = await this.app.mysql.delete(this.entity, { id });
+  
+  async destroy(ids) {
+    const result = await this.app.mysql.delete(this.entity, { id: ids }); // { id } => { id: ids } 兼容多个删除
     const affectedRows = result.affectedRows;
     return affectedRows;
   }

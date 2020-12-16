@@ -28,35 +28,49 @@ class User extends React.Component {
   state = {
     loading: false,
   }
+
   save(payload) {
     this.props.dispatch({type: 'user/save', payload});
   }
+
   onFilter = () => {
     this.getList(1, this.props.pageSize);
   }
+
   onResetFilter = () => {
 
   }
+
   getList = async (pageNum, pageSize) => {
     this.setState({ loading: true });
     await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize}});
     this.setState({ loading: false });
   }
+
   onPageNumChange = (pageNum, pageSize) => {
     this.getList(pageNum, pageSize);
   }
+
   onShowSizeChange = (pageNum, pageSize) => {
     console.log(pageNum, pageSize)
   }
+
   onAdd = () => {
     this.save({visible: true, isCreate: true, record: {}});
   }
+
   onEdit = (record) => {
     this.save({visible: true, isCreate: false, record});
   }
+
   onDelete = (id) => {
     this.props.dispatch({type: 'user/delete', payload: id})
   }
+
+  onMultiDelete = () => {
+    this.props.dispatch({type: 'user/multiDelete', payload: this.props.selectedRowKeys})
+  }
+
   render() {
     const { loading } = this.state;
     const { list, total, pageNum, isCreate, visible, record } = this.props;
@@ -75,6 +89,13 @@ class User extends React.Component {
       onShowSizeChange: this.onShowSizeChange
     }
     
+    const rowSelection = {
+      type: 'checkbox',
+      onChange: (selectedRowKeys, selectedRows) => {
+        this.save({selectedRowKeys});
+      },
+    }
+
     const columns = [
       {
         title: '姓名',
@@ -132,6 +153,7 @@ class User extends React.Component {
         }
       }
     ];
+
     return (
       // 使用 rowKey 来指定 dataSource 的主键。若没有指定，控制台会出现报错的提示 `Each child in a list should have a unique "key" prop`
       <FormWrapper>
@@ -160,17 +182,20 @@ class User extends React.Component {
               >
                 <Row align="middle" justify="space-between">
                   <div>
-                    <Button className="margin-right" type="primary" icon={<SearchOutlined/>} onClick={this.onFilter}>查询</Button>
                     <Button className="margin-right" icon={<SyncOutlined />} onClick={this.onResetFilter}>重置</Button>
+                    <Button className="margin-right" type="primary" icon={<SearchOutlined/>} onClick={this.onFilter}>查询</Button>
                   </div>
                   <div>
                     <Button className="margin-right" icon={<PlusOutlined />} type="primary" onClick={this.onAdd}>新增</Button>
+                    <Popconfirm title="确定删除选中项？" okText="确定" cancelText="取消" onConfirm={this.onMultiDelete}>
+                      <Button className="margin-right" type="primary" danger>批量删除</Button>
+                    </Popconfirm>
                   </div>
                 </Row>
               </Col>
             </Row>
           </Form>
-          <Table rowKey="id" loading={loading} dataSource={list} columns={columns} pagination={pagination} />
+          <Table rowKey="id" loading={loading} rowSelection={rowSelection} dataSource={list} columns={columns} pagination={pagination} />
         </Card>
         <UserModal
           wrappedComponentRef = {inst => this.form = inst}

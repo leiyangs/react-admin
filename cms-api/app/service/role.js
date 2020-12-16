@@ -13,6 +13,7 @@ class RoleService extends BaseService {
   async getUser() {
     return await this.app.mysql.select('user');
   }
+
   async setUser(body) {
     const { app } = this;
     const { roleId, userIds } = body;
@@ -54,6 +55,7 @@ class RoleService extends BaseService {
     });
     return rootMenus;
   }
+  
   async setResource(body) {
     const { app } = this;
     const { roleId, resourceIds } = body;

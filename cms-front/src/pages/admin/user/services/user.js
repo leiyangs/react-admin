@@ -24,3 +24,10 @@ export function deleteUser(id) {
     method: 'delete'
   })
 }
+
+export function multiDeleteUser(ids) {
+  return request(`/api/user/${ids[0]}`, {
+    method: 'delete',
+    body: JSON.stringify(ids)
+  })
+}

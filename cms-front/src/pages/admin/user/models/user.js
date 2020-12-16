@@ -4,6 +4,7 @@ import { PAGE_SIZE } from '../constants'
 
 export default {
   namespace: 'user',
+
   state: {
     list: [],
     total: 0,
@@ -12,15 +13,19 @@ export default {
     isCreate: true,
     visible: false,
     record: {}, // 当前编辑的行
+    selectRowKeys: [], // 多选
   },
+
   reducers: {
     save(state,action) {
       return {...state, ...action.payload}
     },
+
     hideModal(state) {
       return { ...state, visible: false }
     }
   },
+
   effects: {
     *query({payload}, {put,call}) {
       const result = yield call(service.getUserList, payload);
@@ -38,6 +43,7 @@ export default {
         message.error(result.data);
       }
     },
+
     *create({payload}, {put, call, select}) { // 用来获取指定state中的值
       const result = yield call(service.createUser, payload);
       if(result.code === 0) {
@@ -51,6 +57,7 @@ export default {
         message.error(result.data);
       }
     },
+
     *update({payload}, {put, call, select}) {
       const result = yield call(service.updateUser, payload);
       if(result.code === 0) {
@@ -63,17 +70,32 @@ export default {
         message.error(result.data);
       }
     },
+
     *delete({payload}, {put, call, select}) {
       const result = yield call(service.deleteUser, payload);
       if(result.code === 0) {
+        const pageNum = yield select(state => state.user.pageNum);
         const pageSize = yield select(state => state.user.pageSize);
-        yield put({type: 'query', payload: {pageNum: 1, pageSize}});
+        yield put({type: 'query', payload: {pageNum, pageSize}});
+        message.success('删除成功');
+      }else {
+        message.error(result.data);
+      }
+    },
+
+    *multiDelete({payload},{put, call, select}) {
+      const result = yield call(service.multiDeleteUser, payload);
+      if(result.code === 0) {
+        const pageNum = yield select(state => state.user.pageNum);
+        const pageSize = yield select(state => state.user.pageSize);
+        yield put({type: 'query', payload: {pageNum, pageSize}});
         message.success('删除成功');
       }else {
         message.error(result.data);
       }
     }
   },
+
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(({pathname, query}) => { // query是url后的参数

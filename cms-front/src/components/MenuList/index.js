@@ -44,6 +44,7 @@ class MenuList extends React.Component {
       }
     })
   }
+
   render() {
     const user = this.props.user;
     if(!user) {
@@ -53,6 +54,7 @@ class MenuList extends React.Component {
     let openPath = path.split('/');
     openPath.pop();
     openPath = openPath.join('/');
+    
     return (
       <div style={{width: 200, height: '100%', overflow: 'hidden'}}>
         {/* <MyIcon type="icon-example" style={ {fontSize: '16px', color: '#08c'} }/> */}

@@ -20,6 +20,7 @@ class IndexController extends BaseController {
     ctx.set('Content-type', 'image/svg+xml');
     ctx.body = captcha.data;
   }
+  
   async checkCaptcha() { // 校验验证码
     const { ctx } = this;
     const { captcha } = ctx.request.body;
