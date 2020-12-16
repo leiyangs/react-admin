@@ -10,10 +10,12 @@ export default {
     total: 0,
     pageNum: 1,
     pageSize: PAGE_SIZE,
+    loading: false, // table loading
     isCreate: true,
     visible: false,
     record: {}, // 当前编辑的行
-    selectRowKeys: [], // 多选
+    selectedRowKeys: [], // 多选
+    where: {}, // 当前查询条件
   },
 
   reducers: {
@@ -43,6 +45,23 @@ export default {
         message.error(result.data);
       }
     },
+
+    // *filterQuery({payload}, {put,call}) {
+    //   const result = yield call(service.getUserList, payload);
+    //   if(result.code === 0) {
+    //     yield put({
+    //       type: 'save', 
+    //       payload: {
+    //         list: result.data.list,
+    //         total: result.data.total,
+    //         pageNum: payload.pageNum || 1,
+    //         pageSize: payload.pageSize || PAGE_SIZE
+    //       }
+    //     });
+    //   } else {
+    //     message.error(result.data);
+    //   }
+    // }
 
     *create({payload}, {put, call, select}) { // 用来获取指定state中的值
       const result = yield call(service.createUser, payload);

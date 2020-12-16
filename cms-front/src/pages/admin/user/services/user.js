@@ -1,12 +1,15 @@
 import request from '@/utils/request';
+import qs from 'querystring';
 
 // get方式只能把参数拼接到url地址中进行传递
 export function getUserList(data) {
-  return request(`/api/user?pageNum=${data.pageNum}&pageSize=${data.pageSize}`);
+  const dataString = qs.stringify(data);
+  // return request(`/api/user?pageNum=${data.pageNum}&pageSize=${data.pageSize}`);
+  return request(`/api/user?${dataString}`);
 }
 
 export function createUser(data) {
-  return request('/api/user', {
+  return request('/api/user/', {
     method: 'post',
     body: JSON.stringify(data)
   })
