@@ -14,14 +14,14 @@ class User extends React.Component {
     this.props.dispatch({type: 'user/save', payload});
   }
 
-  getList = async (pageNum, pageSize) => {
+  getList = async (pageNum, pageSize, where) => {
     this.save({ loading: true });
-    await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize}});
+    await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize, ...where}}); // 展开传入
     this.save({ loading: false });
   }
 
   onPageNumChange = (pageNum, pageSize) => {
-    this.getList(pageNum, pageSize);
+    this.getList(pageNum, pageSize, this.props.where);
   }
 
   onShowSizeChange = (pageNum, pageSize) => {
@@ -37,7 +37,7 @@ class User extends React.Component {
   }
 
   render() {
-    const { list, total, pageNum, loading, isCreate, visible, record } = this.props;
+    const { list, total, pageNum, loading, isCreate, visible, record, where } = this.props;
     const pagination = {
       total,
       current: pageNum,

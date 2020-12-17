@@ -29,16 +29,18 @@ export default {
   },
 
   effects: {
-    *query({payload}, {put,call}) {
-      const result = yield call(service.getUserList, payload);
+    *query({payload: {pageNum, pageSize, ...where}}, {put,call}) { // 剩余参数，后面的参数通通放到where
+      const result = yield call(service.getUserList, {pageNum, pageSize, ...where}); // 展平传入，qs处理
+      
       if(result.code === 0) {
         yield put({
           type: 'save', 
           payload: {
             list: result.data.list,
             total: result.data.total,
-            pageNum: payload.pageNum || 1,
-            pageSize: payload.pageSize || PAGE_SIZE
+            pageNum: pageNum || 1,
+            pageSize: pageSize || PAGE_SIZE,
+            where
           }
         });
       } else {

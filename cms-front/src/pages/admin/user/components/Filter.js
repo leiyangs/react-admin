@@ -22,7 +22,7 @@ class Filter extends React.Component {
 
   getList = async (pageNum, pageSize, where) => {
     this.save({ loading: true });
-    await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize, ...where}});
+    await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize, ...where}}); // 展开传入
     this.save({ loading: false });
   }
 
