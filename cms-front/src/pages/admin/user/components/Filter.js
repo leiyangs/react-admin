@@ -40,6 +40,7 @@ class Filter extends React.Component {
 
   onResetFilter = () => {
     this.formRef.current.resetFields();
+    this.getList(1, this.props.pageSize, {});
   }
 
   onAdd = () => {
@@ -51,10 +52,11 @@ class Filter extends React.Component {
   }
 
   render() {
-    const { selectedRowKeys, where } = this.props;
+    const { selectedRowKeys } = this.props;
 
     return (
-      <Form ref={this.formRef} initialValues={where}>
+      // form设置默认值setFieldsValue设置，通过initialValue设置时 resetField会有问题
+      <Form ref={this.formRef} preserve={false}>
         <Row gutter={24} align="middle" justify="space-between">
           <Col md={{ span: 14 }}>
             <Row gutter={24}>

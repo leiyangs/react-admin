@@ -15,7 +15,7 @@ export default {
     visible: false,
     record: {}, // 当前编辑的行
     selectedRowKeys: [], // 多选
-    where: {}, // 当前查询条件
+    where: {username: 'aaa'}, // 当前查询条件
   },
 
   reducers: {
@@ -31,7 +31,7 @@ export default {
   effects: {
     *query({payload: {pageNum, pageSize, ...where}}, {put,call}) { // 剩余参数，后面的参数通通放到where
       const result = yield call(service.getUserList, {pageNum, pageSize, ...where}); // 展平传入，qs处理
-      
+
       if(result.code === 0) {
         yield put({
           type: 'save', 

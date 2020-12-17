@@ -37,7 +37,7 @@ class User extends React.Component {
   }
 
   render() {
-    const { list, total, pageNum, loading, isCreate, visible, record, where } = this.props;
+    const { list, total, pageNum, loading, isCreate, visible, record } = this.props;
     const pagination = {
       total,
       current: pageNum,
