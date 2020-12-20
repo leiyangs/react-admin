@@ -37,7 +37,7 @@ class User extends React.Component {
   }
 
   render() {
-    const { list, total, pageNum, loading, isCreate, visible, record } = this.props;
+    const { list, total, pageNum, loading, isCreate, visible, record, selectedRowKeys } = this.props;
     const pagination = {
       total,
       current: pageNum,
@@ -55,6 +55,7 @@ class User extends React.Component {
     
     const rowSelection = {
       type: 'checkbox',
+      selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         this.save({selectedRowKeys});
       },
@@ -123,7 +124,28 @@ class User extends React.Component {
       <FormWrapper>
         <Card>
           <Filter/>
-          <Table rowKey="id" loading={loading} rowSelection={rowSelection} dataSource={list} columns={columns} pagination={pagination} />
+          <Table 
+            rowKey="id"
+            loading={loading}
+            rowSelection={rowSelection}
+            dataSource={list}
+            columns={columns}
+            pagination={pagination}
+            onRow={(record) => {
+              return {
+                onClick: () => { // 单击行勾选
+                  let selectedRowKeys = this.props.selectedRowKeys;
+                  let index = selectedRowKeys.indexOf(record.id);
+                  if(index === -1) { // 如果此行没选中，就选中
+                    selectedRowKeys = [...selectedRowKeys, record.id];
+                  }else { // 如果选中。就过滤掉此条
+                    selectedRowKeys = selectedRowKeys.filter(id => id !== record.id);
+                  }
+                  this.save({selectedRowKeys});
+                }
+              }
+            }}
+          />
         </Card>
         <UserModal
           wrappedComponentRef = {inst => this.form = inst}
