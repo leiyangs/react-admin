@@ -31,12 +31,12 @@ class BaseService extends Service {
     }
 
     // 写死条件1=1 可以不用判断什么时候拼接AND
-    const listSql = `SELECT * FROM user WHERE 1=1 ${whereString} ORDER BY id DESC limit ${(pageNum - 1) * pageSize}, ${pageSize}`;
+    const listSql = `SELECT * FROM ${this.entity} WHERE 1=1 ${whereString} ORDER BY id DESC limit ${(pageNum - 1) * pageSize}, ${pageSize}`;
     const list = await this.app.mysql.query(listSql);
 
     // const total = await this.app.mysql.count(this.entity, where); // 查询条件下的总条数
     // 模糊匹配的total
-    const totalSql = `SELECT COUNT(*) total FROM user WHERE 1=1 ${whereString}`;
+    const totalSql = `SELECT COUNT(*) total FROM ${this.entity} WHERE 1=1 ${whereString}`;
     let total = await this.app.mysql.query(totalSql);
     total = total[0].total;
     return { list, total };
@@ -45,7 +45,6 @@ class BaseService extends Service {
   async update(entity) {
     const result = await this.app.mysql.update(this.entity, entity);
     const affectedRows = result.affectedRows;
-    console.log(result);
     return affectedRows; // 如果在数据库影响行数大于0 那么成功，如果等于于0就是失败
   }
   

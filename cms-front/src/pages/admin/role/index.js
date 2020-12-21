@@ -7,17 +7,18 @@ import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，
 import UserModal from './components/UserModal';
 import Filter from './components/Filter';
 
+// 使用变量通用组件
+const ENTITY = 'role';
+
 export default
-@connect(state => state.user) // 装饰器 和connect()()一样，把class传入
+@connect(state => ({...state[ENTITY], loading: state.loading.models[ENTITY]})) // 装饰器 和connect()()一样，把class传入
 class User extends React.Component {
   save(payload) {
-    this.props.dispatch({type: 'user/save', payload});
+    this.props.dispatch({type: `${ENTITY}/save`, payload});
   }
 
   getList = async (pageNum, pageSize, where) => {
-    this.save({ loading: true });
-    await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize, ...where}}); // 展开传入
-    this.save({ loading: false });
+    await this.props.dispatch({type:`${ENTITY}/query`, payload: {pageNum, pageSize, ...where}}); // 展开传入
   }
 
   onPageNumChange = (pageNum, pageSize) => {
@@ -28,12 +29,14 @@ class User extends React.Component {
     console.log(pageNum, pageSize)
   }
 
-  onEdit = (record) => {
+  onEdit = (e,record) => {
+    e.preventDefault();
+    e.stopPropagation();
     this.save({visible: true, isCreate: false, record});
   }
 
   onDelete = (id) => {
-    this.props.dispatch({type: 'user/delete', payload: id})
+    this.props.dispatch({type: `${ENTITY}/delete`, payload: id})
   }
 
   render() {
@@ -63,40 +66,9 @@ class User extends React.Component {
 
     const columns = [
       {
-        title: '姓名',
-        dataIndex: 'username',
-        key: 'username',
-      },
-      {
-        title: '生日',
-        dataIndex: 'birthday',
-        key: 'birthday',
-        render: birth => {
-          return parseTime(birth, '{y}-{m}-{d}');
-        }
-      },
-      {
-        title: '电话',
-        dataIndex: 'phone',
-        key: 'phone',
-      },
-      {
-        title: '邮箱',
-        dataIndex: 'email',
-        key: 'email',
-      },
-      {
-        title: '性别',
-        dataIndex: 'gender',
-        key: 'gender',
-        render: gender => {
-          return gender === 0 ? '男' : '女'
-        }
-      },
-      {
-        title: '住址',
-        dataIndex: 'address',
-        key: 'address',
+        title: '角色名',
+        dataIndex: 'name',
+        key: 'name',
       },
       {
         title: '操作',
@@ -104,7 +76,7 @@ class User extends React.Component {
         render: (val, record) => {
           return (
             <Fragment>
-              <Button className="margin-right" onClick={() => this.onEdit(record)}>编辑</Button>
+              <Button className="margin-right" onClick={(e) => this.onEdit(e,record)}>编辑</Button>
               <Popconfirm 
                 title="确定删除吗？"
                 okText="确定"
