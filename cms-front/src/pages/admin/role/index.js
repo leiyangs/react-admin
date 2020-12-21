@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import { connect } from 'dva';
-import { parseTime } from '@/utils';
 import styled from 'styled-components';
 import { Table, Card, Button, Popconfirm } from 'antd';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
