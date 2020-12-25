@@ -5,13 +5,13 @@ import { Modal, Form, Input } from 'antd';
 const ENTITY = 'role';
 
 // 使用函数组件，使用React Hooks特性
-const UserModal = (props) => {
+const RoleModal = (props) => {
   const FormItemLayout = {
     labelCol: { span:4 },
     wrapperCol: { span: 20 }
   }
 
-  const { isCreate, visible, record } = props;
+  const { isCreate, editVisible, record } = props;
 
   const [form] = Form.useForm(); // useForm 是 React Hooks 的实现，只能用于函数组件
 
@@ -37,7 +37,7 @@ const UserModal = (props) => {
   return (
     <Modal
       title={isCreate ? '新增用户' : '编辑用户'}
-      visible={visible}
+      visible={editVisible}
       onOk={onOk}
       onCancel={onCancel}
       getContainer={false}
@@ -58,4 +58,4 @@ const UserModal = (props) => {
 
 export default connect(
   state=>state[ENTITY]
-)(UserModal)
+)(RoleModal)

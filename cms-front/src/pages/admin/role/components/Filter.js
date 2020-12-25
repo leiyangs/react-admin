@@ -45,11 +45,15 @@ class Filter extends React.Component {
   }
 
   onAdd = () => {
-    this.save({visible: true, isCreate: true, record: {}});
+    this.save({editVisible: true, isCreate: true, record: {}});
   }
 
   onMultiDelete = () => {
     this.props.dispatch({type: `${ENTITY}/multiDelete`, payload: this.props.selectedRowKeys})
+  }
+
+  setRolePermission = () => {
+    this.save({setPermissionVisible: true})
   }
 
   render() {
@@ -76,6 +80,7 @@ class Filter extends React.Component {
               <Popconfirm title="确定删除选中项？" okText="确定" cancelText="取消" onConfirm={this.onMultiDelete} disabled={selectedRowKeys.length===0}>
                 <Button className="margin-right" type="primary" disabled={selectedRowKeys.length===0} danger>批量删除</Button>
               </Popconfirm>
+              <Button className="margin-right" onClick={this.setRolePermission}>角色授权</Button>
             </Form.Item>
           </Col>
         </Row>

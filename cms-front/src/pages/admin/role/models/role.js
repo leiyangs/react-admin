@@ -13,7 +13,8 @@ export default {
     pageNum: 1,
     pageSize: PAGE_SIZE,
     isCreate: true,
-    visible: false,
+    editVisible: false,
+    setPermissionVisible: false,
     record: {}, // 当前编辑的行
     selectedRowKeys: [], // 多选
     where: {username: 'aaa'}, // 当前查询条件
@@ -25,13 +26,13 @@ export default {
     },
 
     hideModal(state) {
-      return { ...state, visible: false }
+      return { ...state, editVisible: false, setPermissionVisible: false }
     }
   },
 
   effects: {
     *query({payload: {pageNum, pageSize, ...where}}, {put,call}) { // 剩余参数，后面的参数通通放到where
-      const result = yield call(service.getUserList, {pageNum, pageSize, ...where}); // 展平传入，qs处理
+      const result = yield call(service.getRoleList, {pageNum, pageSize, ...where}); // 展平传入，qs处理
 
       if(result.code === 0) {
         yield put({
@@ -50,7 +51,7 @@ export default {
     },
 
     *create({payload}, {put, call, select}) { // 用来获取指定state中的值
-      const result = yield call(service.createUser, payload);
+      const result = yield call(service.createRole, payload);
       if(result.code === 0) {
         const pageSize = yield select(state => state[ENTITY].pageSize);
         // 重新查询 第一页
@@ -64,7 +65,7 @@ export default {
     },
 
     *update({payload}, {put, call, select}) {
-      const result = yield call(service.updateUser, payload);
+      const result = yield call(service.updateRole, payload);
       if(result.code === 0) {
         const pageNum = yield select(state => state[ENTITY].pageNum);
         const pageSize = yield select(state => state[ENTITY].pageSize);
@@ -77,7 +78,7 @@ export default {
     },
 
     *delete({payload}, {put, call, select}) {
-      const result = yield call(service.deleteUser, payload);
+      const result = yield call(service.deleteRole, payload);
       if(result.code === 0) {
         const pageNum = yield select(state => state[ENTITY].pageNum);
         const pageSize = yield select(state => state[ENTITY].pageSize);
@@ -89,7 +90,7 @@ export default {
     },
 
     *multiDelete({payload},{put, call, select}) {
-      const result = yield call(service.multiDeleteUser, payload);
+      const result = yield call(service.multiDeleteRole, payload);
       if(result.code === 0) {
         const pageNum = yield select(state => state[ENTITY].pageNum);
         const pageSize = yield select(state => state[ENTITY].pageSize);

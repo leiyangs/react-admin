@@ -3,15 +3,16 @@ import { connect } from 'dva';
 import styled from 'styled-components';
 import { Table, Card, Button, Popconfirm } from 'antd';
 import { PAGE_SIZE } from './constants'; // constants是umi中规定的名称，会忽略不处理为route
-import UserModal from './components/UserModal';
+import RoleModal from './components/RoleModal';
 import Filter from './components/Filter';
+import PermissionModal from './components/PermissionModal';
 
 // 使用变量通用组件
 const ENTITY = 'role';
 
 export default
 @connect(state => ({...state[ENTITY], loading: state.loading.models[ENTITY]})) // 装饰器 和connect()()一样，把class传入
-class User extends React.Component {
+class Role extends React.Component {
   save(payload) {
     this.props.dispatch({type: `${ENTITY}/save`, payload});
   }
@@ -30,7 +31,7 @@ class User extends React.Component {
 
   onEdit = (e, record) => {
     e.stopPropagation();
-    this.save({visible: true, isCreate: false, record});
+    this.save({editVisible: true, isCreate: false, record});
   }
 
   onDelete = (e, id) => {
@@ -40,7 +41,7 @@ class User extends React.Component {
   }
 
   render() {
-    const { list, total, pageNum, loading, isCreate, visible, record, selectedRowKeys } = this.props;
+    const { list, total, pageNum, loading, isCreate, editVisible, record, selectedRowKeys, setPermissionVisible } = this.props;
     const pagination = {
       total,
       current: pageNum,
@@ -121,10 +122,14 @@ class User extends React.Component {
             }}
           />
         </Card>
-        <UserModal
+        <RoleModal
           wrappedComponentRef = {inst => this.form = inst}
           isCreate={isCreate}
-          visible={visible}
+          visible={editVisible}
+          record={record}
+        />  
+        <PermissionModal
+          visible={setPermissionVisible}
           record={record}
         />
       </FormWrapper>
