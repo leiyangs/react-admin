@@ -72,7 +72,7 @@ class UserController extends BaseController {
       const token = sign({ username: user.username, menus: user.menus }, config.JWT_SECRET); // 生成token，加盐 config.default.js
       this.success(token);
     } else {
-      this.error('登录失败');
+      this.error('账号或密码错误');
     }
   }
 }

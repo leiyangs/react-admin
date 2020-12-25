@@ -28,11 +28,13 @@ class User extends React.Component {
     console.log(pageNum, pageSize)
   }
 
-  onEdit = (record) => {
+  onEdit = (e, record) => {
+    e.stopPropagation();
     this.save({visible: true, isCreate: false, record});
   }
 
-  onDelete = (id) => {
+  onDelete = (e, id) => {
+    e.stopPropagation();
     this.props.dispatch({type: 'user/delete', payload: id})
   }
 
@@ -104,14 +106,15 @@ class User extends React.Component {
         render: (val, record) => {
           return (
             <Fragment>
-              <Button className="margin-right" onClick={() => this.onEdit(record)}>编辑</Button>
+              <Button className="margin-right" onClick={e => this.onEdit(e, record)}>编辑</Button>
               <Popconfirm 
                 title="确定删除吗？"
                 okText="确定"
                 cancelText="取消"
-                onConfirm={()=>this.onDelete(record.id)}
+                onCancel={e => e.stopPropagation()}
+                onConfirm={e=>this.onDelete(e, record.id)}
               >
-                <Button type="primary" danger>删除</Button>
+                <Button type="primary" onClick={e => e.stopPropagation()} danger>删除</Button>
               </Popconfirm>
             </Fragment>
           )

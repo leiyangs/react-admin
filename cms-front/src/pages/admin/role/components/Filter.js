@@ -62,13 +62,8 @@ class Filter extends React.Component {
           <Col md={{ span: 14 }}>
             <Row gutter={24}>
               <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }}>
-                <Form.Item name="username">
-                  <Search placeholder="用户名"/>
-                </Form.Item>
-              </Col>
-              <Col {...ColProps} xl={{ span: 6 }} md={{ span: 8 }}>
-                <Form.Item name="email">
-                  <Search placeholder="邮箱"/>
+                <Form.Item name="name">
+                  <Search placeholder="角色名"/>
                 </Form.Item>
               </Col>
               <Button className="margin-right" type="primary" icon={<SearchOutlined/>} onClick={this.onFilter}>查询</Button>

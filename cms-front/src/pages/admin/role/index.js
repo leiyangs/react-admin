@@ -28,13 +28,14 @@ class User extends React.Component {
     console.log(pageNum, pageSize)
   }
 
-  onEdit = (e,record) => {
-    e.preventDefault();
+  onEdit = (e, record) => {
     e.stopPropagation();
     this.save({visible: true, isCreate: false, record});
   }
 
-  onDelete = (id) => {
+  onDelete = (e, id) => {
+    e.stopPropagation();
+    e.preventDefault();
     this.props.dispatch({type: `${ENTITY}/delete`, payload: id})
   }
 
@@ -80,9 +81,10 @@ class User extends React.Component {
                 title="确定删除吗？"
                 okText="确定"
                 cancelText="取消"
-                onConfirm={()=>this.onDelete(record.id)}
+                onCancel={e=>e.stopPropagation()}
+                onConfirm={(e)=>this.onDelete(e, record.id)}
               >
-                <Button type="primary" danger>删除</Button>
+                <Button type="primary" onClick={e => e.stopPropagation()} danger>删除</Button>
               </Popconfirm>
             </Fragment>
           )
