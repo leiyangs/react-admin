@@ -56,9 +56,7 @@ const PermissionModal = (props) => {
         checkedKeys={checkedKeys}
         onCheck={onCheck}
       >
-        <TreeNode>
-          {RenderResources(resources)}
-        </TreeNode>
+        {RenderResources(resources)}
       </Tree>
     </Modal>
   )
