@@ -18,6 +18,8 @@ export default {
     record: {}, // 当前编辑的行
     selectedRowKeys: [], // 多选
     where: {username: 'aaa'}, // 当前查询条件
+    resources: [], // treeData
+    checkedKeys: [],
   },
 
   reducers: {
@@ -99,6 +101,15 @@ export default {
       }else {
         message.error(result.data);
       }
+    },
+
+    *getResources({payload}, {put, call}) {
+      const result = yield call(service.getResources, payload);
+      if(result.code === 0) {
+        yield put({type: 'save', payload: {resources: result.data}});
+      }else {
+        message.error(result.data);
+      }
     }
   },
 
@@ -107,6 +118,7 @@ export default {
       history.listen(({pathname, query}) => { // query是url后的参数
         if(pathname === `/admin/${ENTITY}`) {
           dispatch({type: 'query', payload: {pageNum: 1, pageSize: PAGE_SIZE}}); // 在model内dispatch不用加前缀
+          dispatch({type: 'getResources'});
         }
       })
     }

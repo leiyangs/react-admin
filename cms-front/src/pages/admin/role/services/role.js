@@ -37,3 +37,7 @@ export function multiDeleteRole(ids) {
     body: JSON.stringify(ids)
   })
 }
+
+export function getResources() {
+  return request(`/api/${ENTITY}/getResource`)
+}

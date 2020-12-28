@@ -8,16 +8,14 @@ import UserModal from './components/UserModal';
 import Filter from './components/Filter';
 
 export default
-@connect(state => state.user) // 装饰器 和connect()()一样，把class传入
+@connect(state => ({...state.user, loading: state.loading.models.user})) // 装饰器 和connect()()一样，把class传入
 class User extends React.Component {
   save(payload) {
     this.props.dispatch({type: 'user/save', payload});
   }
 
   getList = async (pageNum, pageSize, where) => {
-    this.save({ loading: true });
     await this.props.dispatch({type:'user/query', payload: {pageNum, pageSize, ...where}}); // 展开传入
-    this.save({ loading: false });
   }
 
   onPageNumChange = (pageNum, pageSize) => {

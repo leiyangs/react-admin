@@ -10,7 +10,6 @@ export default {
     total: 0,
     pageNum: 1,
     pageSize: PAGE_SIZE,
-    loading: false, // table loading
     isCreate: true,
     visible: false,
     record: {}, // 当前编辑的行
