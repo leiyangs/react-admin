@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Row, Col, Input, Button, Popconfirm } from 'antd';
+import { Form, Row, Col, Input, Button, Popconfirm, message } from 'antd';
 import { SearchOutlined, SyncOutlined, PlusOutlined } from '@ant-design/icons';
 
 const Search = Input;
@@ -52,8 +52,12 @@ class Filter extends React.Component {
     this.props.dispatch({type: `${ENTITY}/multiDelete`, payload: this.props.selectedRowKeys})
   }
 
-  setRolePermission = () => {
-    this.save({setPermissionVisible: true})
+  onSetPermission = () => {
+    if(this.props.selectedRowKeys.length===1) {
+      this.save({setPermissionVisible: true});
+    }else {
+      message.error('只能选择一个角色');
+    }
   }
 
   render() {
@@ -80,7 +84,7 @@ class Filter extends React.Component {
               <Popconfirm title="确定删除选中项？" okText="确定" cancelText="取消" onConfirm={this.onMultiDelete} disabled={selectedRowKeys.length===0}>
                 <Button className="margin-right" type="primary" disabled={selectedRowKeys.length===0} danger>批量删除</Button>
               </Popconfirm>
-              <Button className="margin-right" onClick={this.setRolePermission}>角色授权</Button>
+              <Button className="margin-right" onClick={this.onSetPermission}>角色授权</Button>
             </Form.Item>
           </Col>
         </Row>
