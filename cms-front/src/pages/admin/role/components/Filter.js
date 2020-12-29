@@ -53,10 +53,18 @@ class Filter extends React.Component {
   }
 
   onSetPermission = () => {
-    if(this.props.selectedRowKeys.length===1) {
-      this.save({setPermissionVisible: true});
+    if(this.props.selectedRows.length===1) {
+      let record = this.props.selectedRows[0];
+      this.save({
+        setPermissionVisible: true,
+        record,
+        checkedKeys: record.resourceIds
+      });
+      console.log(record.resourceIds)
+    }else if(this.props.selectedRows.length===0) {
+      message.error('请勾选角色');
     }else {
-      message.error('只能选择一个角色');
+      message.error('只能勾选一个角色');
     }
   }
 

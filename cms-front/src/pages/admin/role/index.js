@@ -61,7 +61,7 @@ class Role extends React.Component {
       type: 'checkbox',
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
-        this.save({selectedRowKeys});
+        this.save({selectedRowKeys, selectedRows});
       },
     }
 

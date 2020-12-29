@@ -16,10 +16,11 @@ export default {
     editVisible: false,
     setPermissionVisible: false,
     record: {}, // 当前编辑的行
-    selectedRowKeys: [], // 多选
+    selectedRowKeys: [], // 多选key
+    selectedRows: [], // 多选rowData
     where: {username: 'aaa'}, // 当前查询条件
     resources: [], // treeData
-    checkedKeys: [],
+    checkedKeys: [], // tree选中的id
   },
 
   reducers: {

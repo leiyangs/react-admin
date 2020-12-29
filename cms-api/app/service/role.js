@@ -7,6 +7,40 @@ class RoleService extends BaseService {
     super(...args);
     this.entity = 'role';
   }
+
+  // 重写select 把每个角色的权限返回 用来渲染tree的选中
+  async select(pageNum, pageSize, where) {
+    // 模糊查询
+    let whereString = '';
+    const fields = Object.keys(where);
+    for (let i = 0; i < fields.length; i++) {
+      whereString += (`AND ${fields[i]} like '%${where[fields[i]]}%'`);
+    }
+
+    // 写死条件1=1 可以不用判断什么时候拼接AND
+    const listSql = `SELECT * FROM ${this.entity} WHERE 1=1 ${whereString} ORDER BY id DESC limit ${(pageNum - 1) * pageSize}, ${pageSize}`;
+    const list = await this.app.mysql.query(listSql);
+
+    for (let i = 0; i < list.length; i++) {
+      let role = list[i];
+      // 角色下的权限
+      let role_resources = await this.app.mysql.select('role_resource', {role_id: role.id});
+      let resourceIds = role_resources.map(role_resource => role_resource.resource_id);
+      role.resourceIds = resourceIds;
+
+      // 人的角色
+      let role_users = await this.app.mysql.select('role_user', {role_id: role.id});
+      let userIds = role_users.map(role_user => role_user.user_id);
+      role.userIds = userIds;
+    }
+
+    // 模糊匹配的total
+    const totalSql = `SELECT COUNT(*) total FROM ${this.entity} WHERE 1=1 ${whereString}`;
+    let total = await this.app.mysql.query(totalSql);
+    total = total[0].total;
+    return { list, total };
+  }
+
   /**
    * 角色
    */
