@@ -110,13 +110,16 @@ class Role extends React.Component {
               return {
                 onClick: () => { // 单击行勾选
                   let selectedRowKeys = this.props.selectedRowKeys;
-                  let index = selectedRowKeys.indexOf(record.id);
+                  let selectedRows = this.props.selectedRows;
+                  const index = selectedRowKeys.indexOf(record.id);
                   if(index === -1) { // 如果此行没选中，就选中
-                    selectedRowKeys = [...selectedRowKeys, record.id];
+                    selectedRowKeys = [...selectedRowKeys, record.id]; // id数组
+                    selectedRows = [...selectedRows, record]; // row数组
                   }else { // 如果选中。就过滤掉此条
                     selectedRowKeys = selectedRowKeys.filter(id => id !== record.id);
+                    selectedRows = selectedRows.filter(row => row.id !== record.id);
                   }
-                  this.save({selectedRowKeys});
+                  this.save({selectedRowKeys, selectedRows});
                 }
               }
             }}

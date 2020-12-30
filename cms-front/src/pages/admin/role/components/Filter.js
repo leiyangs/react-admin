@@ -55,10 +55,11 @@ class Filter extends React.Component {
   onSetPermission = () => {
     if(this.props.selectedRows.length===1) {
       let record = this.props.selectedRows[0];
+      let resourceIds = record.resourceIds.map(resourceId => resourceId + ''); // 必须是string[]
       this.save({
         setPermissionVisible: true,
         record,
-        checkedKeys: record.resourceIds
+        checkedKeys: resourceIds
       });
       console.log(record.resourceIds)
     }else if(this.props.selectedRows.length===0) {

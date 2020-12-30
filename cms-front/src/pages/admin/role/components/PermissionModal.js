@@ -9,6 +9,10 @@ const TreeNode = Tree.TreeNode;
 const PermissionModal = (props) => {
   const { setPermissionVisible, record, resources, checkedKeys } = props;
 
+  const save = (payload) => {
+    props.dispatch({type: `${ENTITY}/save`, payload});
+  }
+
   const onOk = () => {
     
   }
@@ -17,8 +21,9 @@ const PermissionModal = (props) => {
     props.dispatch({type: `${ENTITY}/hideModal`});
   }
 
-  const onCheck = () => {
-
+  const onCheck = (checkedKeys) => {
+    console.log(checkedKeys)
+    save(checkedKeys);
   }
 
   // 4.x版本用TreeNode会报warning
@@ -53,10 +58,12 @@ const PermissionModal = (props) => {
         defaultExpandAll
         key="id"
         // treeData={resources}
-        checkedKeys={checkedKeys}
+        checkedKeys={checkedKeys} // [] string
         onCheck={onCheck}
       >
-        {RenderResources(resources)}
+        <TreeNode title="所有权限" key={0} disabled>
+          {RenderResources(resources)}
+        </TreeNode>
       </Tree>
     </Modal>
   )

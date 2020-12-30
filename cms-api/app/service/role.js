@@ -24,12 +24,12 @@ class RoleService extends BaseService {
     for (let i = 0; i < list.length; i++) {
       let role = list[i];
       // 角色下的权限
-      let role_resources = await this.app.mysql.select('role_resource', {role_id: role.id});
+      let role_resources = await this.app.mysql.select('role_resource', {where: {role_id: role.id}});
       let resourceIds = role_resources.map(role_resource => role_resource.resource_id);
       role.resourceIds = resourceIds;
 
       // 人的角色
-      let role_users = await this.app.mysql.select('role_user', {role_id: role.id});
+      let role_users = await this.app.mysql.select('role_user', {where: {role_id: role.id}});
       let userIds = role_users.map(role_user => role_user.user_id);
       role.userIds = userIds;
     }
