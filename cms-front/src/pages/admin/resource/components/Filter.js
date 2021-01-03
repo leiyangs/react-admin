@@ -4,7 +4,7 @@ import { Form, Row, Col, Input, Button, Popconfirm, message } from 'antd';
 import { SearchOutlined, SyncOutlined, PlusOutlined } from '@ant-design/icons';
 
 const Search = Input;
-const ENTITY = 'role';
+const ENTITY = 'resource';
 
 const ColProps = {
   xs: 24,
@@ -43,29 +43,8 @@ class Filter extends React.Component {
     this.getList(1, this.props.pageSize, {});
   }
 
-  onAdd = () => {
-    this.save({editVisible: true, isCreate: true, record: {}});
-  }
-
   onMultiDelete = () => {
     this.props.dispatch({type: `${ENTITY}/multiDelete`, payload: this.props.selectedRowKeys})
-  }
-
-  onSetPermission = () => {
-    if(this.props.selectedRows.length===1) {
-      let record = this.props.selectedRows[0];
-      let resourceIds = record.resourceIds.map(resourceId => resourceId + ''); // 必须是string[]
-      this.save({
-        setPermissionVisible: true,
-        record,
-        checkedKeys: resourceIds
-      });
-      console.log(resourceIds)
-    }else if(this.props.selectedRows.length===0) {
-      message.error('请勾选角色');
-    }else {
-      message.error('只能勾选一个角色');
-    }
   }
 
   render() {
@@ -88,11 +67,9 @@ class Filter extends React.Component {
           </Col>
           <Col>
             <Form.Item>
-              <Button className="margin-right" icon={<PlusOutlined />} type="primary" onClick={this.onAdd}>新增</Button>
-              <Popconfirm title="确定删除选中项？" okText="确定" cancelText="取消" onConfirm={this.onMultiDelete} disabled={selectedRowKeys.length===0}>
-                <Button className="margin-right" type="primary" disabled={selectedRowKeys.length===0} danger>批量删除</Button>
-              </Popconfirm>
-              <Button className="margin-right" onClick={this.onSetPermission}>为角色设置权限</Button>
+                <Popconfirm title="确定删除选中项？" okText="确定" cancelText="取消" onConfirm={this.onMultiDelete} disabled={selectedRowKeys.length===0}>
+                  <Button className="margin-right" type="primary" disabled={selectedRowKeys.length===0} danger>批量删除</Button>
+                </Popconfirm>
             </Form.Item>
           </Col>
         </Row>
