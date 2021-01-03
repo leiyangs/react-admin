@@ -47,7 +47,7 @@ class BaseService extends Service {
     const affectedRows = result.affectedRows;
     return affectedRows; // 如果在数据库影响行数大于0 那么成功，如果等于于0就是失败
   }
-  
+
   async destroy(ids) {
     const result = await this.app.mysql.delete(this.entity, { id: ids }); // { id } => { id: ids } 兼容多个删除
     const affectedRows = result.affectedRows;

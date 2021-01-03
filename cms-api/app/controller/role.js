@@ -29,7 +29,7 @@ class RoleController extends BaseController {
     const result = await service.role.getResource();
     this.success(result);
   }
-  
+
   // 设置资源和用户的关系
   async setResource() {
     const { ctx, service } = this;

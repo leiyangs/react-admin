@@ -7,14 +7,14 @@ const ENTITY = 'role';
 const TreeNode = Tree.TreeNode;
 
 const PermissionModal = (props) => {
-  const { setPermissionVisible, record, resources, checkedKeys } = props;
+  const { setPermissionVisible, resources, checkedKeys } = props;
 
   const save = (payload) => {
     props.dispatch({type: `${ENTITY}/save`, payload});
   }
 
   const onOk = () => {
-    
+    props.dispatch({ type: `${ENTITY}/setRolePermission` })
   }
 
   const onCancel = () => {
@@ -22,8 +22,8 @@ const PermissionModal = (props) => {
   }
 
   const onCheck = (checkedKeys) => {
-    console.log(checkedKeys)
-    save(checkedKeys);
+    save({ checkedKeys });
+    console.log(props.checkedKeys)
   }
 
   // 4.x版本用TreeNode会报warning
@@ -58,7 +58,8 @@ const PermissionModal = (props) => {
         defaultExpandAll
         key="id"
         // treeData={resources}
-        checkedKeys={checkedKeys} // [] string
+        defaultCheckedKeys={checkedKeys} // [] string
+        defaultSelectedKeys={checkedKeys}
         onCheck={onCheck}
       >
         <TreeNode title="所有权限" key={0} disabled>

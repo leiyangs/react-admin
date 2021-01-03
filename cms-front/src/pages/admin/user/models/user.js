@@ -50,9 +50,9 @@ export default {
     *create({payload}, {put, call, select}) { // 用来获取指定state中的值
       const result = yield call(service.createUser, payload);
       if(result.code === 0) {
-        const pageSize = yield select(state => state.user.pageSize);
+        const user = yield select(state => state.user);
         // 重新查询 第一页
-        yield put({type: 'query', payload: {pageNum: 1, pageSize}});
+        yield put({type: 'query', payload: {pageNum: 1, pageSize: user.pageSize, ...user.where}});
         // 关闭模态框
         yield put({type: 'hideModal'});
         message.success('新增成功');
@@ -66,7 +66,8 @@ export default {
       if(result.code === 0) {
         const pageNum = yield select(state => state.user.pageNum);
         const pageSize = yield select(state => state.user.pageSize);
-        yield put({type: 'query', payload: {pageNum, pageSize}});
+        const where = yield select(state => state.user.where);
+        yield put({type: 'query', payload: {pageNum, pageSize, ...where}});
         yield put({type: 'hideModal'});
         message.success('编辑成功');
       }else {

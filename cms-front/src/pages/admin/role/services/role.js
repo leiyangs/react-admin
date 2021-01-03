@@ -41,3 +41,10 @@ export function multiDeleteRole(ids) {
 export function getResources() {
   return request(`/api/${ENTITY}/getResource`)
 }
+
+export function setRolePermission(data) {
+  return request(`/api/${ENTITY}/setResource`, {
+    method: 'post',
+    body: JSON.stringify(data)
+  })
+}

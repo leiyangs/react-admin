@@ -1,11 +1,11 @@
 import { message } from 'antd';
 import * as service from '../services/role';
-import { PAGE_SIZE } from '../constants'
+import { PAGE_SIZE } from '../constants';
 
 const ENTITY = 'role';
 
 export default {
-  namespace: 'role',
+  namespace: ENTITY,
 
   state: {
     list: [],
@@ -18,7 +18,7 @@ export default {
     record: {}, // 当前编辑的行
     selectedRowKeys: [], // 多选key
     selectedRows: [], // 多选rowData
-    where: {username: 'aaa'}, // 当前查询条件
+    where: {}, // 当前查询条件
     resources: [], // treeData
     checkedKeys: [], // tree选中的id
   },
@@ -70,9 +70,9 @@ export default {
     *update({payload}, {put, call, select}) {
       const result = yield call(service.updateRole, payload);
       if(result.code === 0) {
-        const pageNum = yield select(state => state[ENTITY].pageNum);
-        const pageSize = yield select(state => state[ENTITY].pageSize);
-        yield put({type: 'query', payload: {pageNum, pageSize}});
+        const { pageNum, pageSize, where } = yield select(state => state[ENTITY]);
+
+        yield put({type: 'query', payload: {pageNum, pageSize, ...where}});
         yield put({type: 'hideModal'});
         message.success('编辑成功');
       }else {
@@ -83,8 +83,7 @@ export default {
     *delete({payload}, {put, call, select}) {
       const result = yield call(service.deleteRole, payload);
       if(result.code === 0) {
-        const pageNum = yield select(state => state[ENTITY].pageNum);
-        const pageSize = yield select(state => state[ENTITY].pageSize);
+        const { pageNum, pageSize } = yield select(state => state[ENTITY]);
         yield put({type: 'query', payload: {pageNum, pageSize}});
         message.success('删除成功');
       }else {
@@ -95,8 +94,7 @@ export default {
     *multiDelete({payload},{put, call, select}) {
       const result = yield call(service.multiDeleteRole, payload);
       if(result.code === 0) {
-        const pageNum = yield select(state => state[ENTITY].pageNum);
-        const pageSize = yield select(state => state[ENTITY].pageSize);
+        const { pageNum, pageSize } = yield select(state => state[ENTITY]);
         yield put({type: 'query', payload: {pageNum, pageSize}});
         message.success('删除成功');
       }else {
@@ -111,6 +109,18 @@ export default {
       }else {
         message.error(result.data);
       }
+    },
+
+    *setRolePermission({payload}, {put, call, select}) { // 保存用户资源
+      const { record, checkedKeys, where, pageNum, pageSize } = yield select(state => state[ENTITY]);
+      const result = yield call(service.setRolePermission, {roleId: record.id, resourceIds: checkedKeys}); // 保存接口
+      if(result.code === 0) {
+        yield put({type: 'query', payload: {pageNum, pageSize, ...where}}); // 重新查询
+        yield put({type: 'save', payload: {setPermissionVisible: false}}); // 关闭弹窗
+        message.success('保存成功');
+      }else {
+        message.error('保存失败');
+      }
     }
   },
 
@@ -119,7 +129,7 @@ export default {
       history.listen(({pathname, query}) => { // query是url后的参数
         if(pathname === `/admin/${ENTITY}`) {
           dispatch({type: 'query', payload: {pageNum: 1, pageSize: PAGE_SIZE}}); // 在model内dispatch不用加前缀
-          dispatch({type: 'getResources'});
+          dispatch({type: 'getResources'}); // 获取弹窗里的资源树
         }
       })
     }

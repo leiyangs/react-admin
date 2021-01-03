@@ -22,9 +22,8 @@ class Filter extends React.Component {
   }
 
   getList = async (pageNum, pageSize, where) => {
-    this.save({ loading: true });
+    this.save({ where });
     await this.props.dispatch({type:`${ENTITY}/query`, payload: {pageNum, pageSize, ...where}}); // 展开传入
-    this.save({ loading: false });
   }
 
   onFilter = () => {
@@ -61,7 +60,7 @@ class Filter extends React.Component {
         record,
         checkedKeys: resourceIds
       });
-      console.log(record.resourceIds)
+      console.log(resourceIds)
     }else if(this.props.selectedRows.length===0) {
       message.error('请勾选角色');
     }else {
