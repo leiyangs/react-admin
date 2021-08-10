@@ -41,16 +41,16 @@ class BaseController extends Controller {
     const result = await service[this.entity].update(user);
     result > 0 ? this.success('更新成功') : this.error('更新失败');
   }
-  
+
   async destroy() {
     const { ctx, service } = this;
     const id = ctx.params.id;
     let ids = ctx.request.body;
-    
-    if(!Array.isArray(ids)) {
-      ids = [id];
+
+    if (!Array.isArray(ids)) {
+      ids = [ id ];
     }
-    console.log('id',id,'ids',ids)
+    console.log('id', id, 'ids', ids);
     const result = await service[this.entity].destroy(ids); // 兼容批量删除
     result > 0 ? this.success('删除成功') : this.error('删除失败');
   }
