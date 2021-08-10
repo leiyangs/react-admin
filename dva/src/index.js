@@ -65,7 +65,7 @@ app.model({
   state: { number: 0 }, // 状态对象
   reducers: { // 处理器
     add(state) {
-      return { number:state.number + 1 }
+      return { number:state.number + 2 }
     }
   },
   effects: { // 副作用
